@@ -33,29 +33,35 @@ export const router = createBrowserRouter([
   },
   {
     path: "AllQueries",
-    loader:()=>fetch(`http://localhost:3000/allQuestion`),
-    Component:AllQueries,
-
+    loader: () => fetch(`http://localhost:3000/allQuestion`),
+    Component: AllQueries,
   },
- {
-  path: "AllQusetinDetails/:id",
-  loader: ({ params }) => fetch(`http://localhost:3000/allQuestion/singleQuestion/${params.id}`),
-  element:(<PrivateRoutes>
-     <AllQuestionDetails />
-  </PrivateRoutes>),
-}
-,
+  {
+    path: "AllQusetinDetails/:id",
+    loader: ({ params }) =>
+      fetch(`http://localhost:3000/allQuestion/singleQuestion/${params.id}`),
+    element: (
+      <PrivateRoutes>
+        <AllQuestionDetails />
+      </PrivateRoutes>
+    ),
+  },
   {
     path: "myQueries",
-    Component:MyQueries
+    // loader: ({ params }) =>
+    //   fetch(`http://localhost:3000/allQuestion/${params.email}`),
+    element: (
+      <PrivateRoutes>
+        <MyQueries />
+      </PrivateRoutes>
+    ),
   },
   {
-  path: "addQuerie",
-  element: (
-    <PrivateRoutes>
-      <AddMyQueries />
-    </PrivateRoutes>
-  )
-}
-
+    path: "addQuerie",
+    element: (
+      <PrivateRoutes>
+        <AddMyQueries />
+      </PrivateRoutes>
+    ),
+  },
 ]);

@@ -6,11 +6,10 @@ import { AuthContext } from "../../Firebase/AuthProvider";
 import Swal from "sweetalert2";
 
 const AllQuestionDetails = () => {
-   
   const { user } = useContext(AuthContext);
   const data = useLoaderData();
-   const [commentText,setCommentText]=useState("");
-    const [comments,setComments]=useState(data?.comments || [] )
+  const [commentText, setCommentText] = useState("");
+  const [comments, setComments] = useState(data?.comments || []);
 
   const handleSend = async (e) => {
     e.preventDefault();
@@ -38,8 +37,8 @@ const AllQuestionDetails = () => {
       );
 
       if (response.ok) {
-        setComments((prev)=>[...prev,formData]);
-        setCommentText("")
+        setComments((prev) => [...prev, formData]);
+        setCommentText("");
         Swal.fire({
           icon: "success",
           title: "Comment Added",
@@ -105,37 +104,36 @@ const AllQuestionDetails = () => {
 
         {/* Comments Section */}
         <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
-  <h3 className="text-lg font-semibold mb-4">Comments</h3>
+          <h3 className="text-lg font-semibold mb-4">Comments</h3>
 
-  {comments.length > 0 ? (
-    <div className="space-y-4">
-      {comments.map((cmt, i) => (
-        <div
-          key={i}
-          className="flex items-start gap-4 border-b pb-4 last:border-b-0 dark:border-gray-700"
-        >
-          <img
-            src={cmt.photoURL}
-            alt={cmt.name}
-            className="w-10 h-10 rounded-full object-cover"
-          />
-          <div>
-            <p className="font-medium">{cmt.name}</p>
-            <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-              {cmt.comment}
-            </p>
-            <p className="text-xs text-gray-400 mt-1">
-              {new Date(cmt.time).toLocaleString()}
-            </p>
-          </div>
+          {comments.length > 0 ? (
+            <div className="space-y-4">
+              {comments.map((cmt, i) => (
+                <div
+                  key={i}
+                  className="flex items-start gap-4 border-b pb-4 last:border-b-0 dark:border-gray-700"
+                >
+                  <img
+                    src={cmt.photoURL}
+                    alt={cmt.name}
+                    className="w-10 h-10 rounded-full object-cover"
+                  />
+                  <div>
+                    <p className="font-medium">{cmt.name}</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                      {cmt.comment}
+                    </p>
+                    <p className="text-xs text-gray-400 mt-1">
+                      {new Date(cmt.time).toLocaleString()}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="text-sm text-gray-500">No comments yet.</p>
+          )}
         </div>
-      ))}
-    </div>
-  ) : (
-    <p className="text-sm text-gray-500">No comments yet.</p>
-  )}
-</div>
-
 
         {/* Comment Box Section */}
         <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 max-w-md mx-auto mt-10">
