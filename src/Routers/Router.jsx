@@ -40,7 +40,9 @@ export const router = createBrowserRouter([
  {
   path: "AllQusetinDetails/:id",
   loader: ({ params }) => fetch(`http://localhost:3000/allQuestion/singleQuestion/${params.id}`),
-  element: <AllQuestionDetails />,
+  element:(<PrivateRoutes>
+     <AllQuestionDetails />
+  </PrivateRoutes>),
 }
 ,
   {

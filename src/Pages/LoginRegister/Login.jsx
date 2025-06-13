@@ -131,7 +131,14 @@ const Login = () => {
                 <a href="#" className="text-sm text-blue-600 hover:underline">
                   Forgot password?
                 </a>
+                
               </div>
+              <p className="text-[15px] mt-6 lg:mt-12 text-slate-600 dark:text-slate-300">
+              Don't have an account?
+              <Link to="/register" className="text-blue-600 font-medium hover:underline ml-1">
+                Register here
+              </Link>
+            </p>
 
               <button
                 type="submit"
