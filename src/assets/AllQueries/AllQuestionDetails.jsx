@@ -10,19 +10,21 @@ import { useNavigate } from "react-router-dom";
 
 const AllQuestionDetails = () => {
   const { user } = useContext(AuthContext);
-
   const navigate = useNavigate();
-
   const data = useLoaderData();
+
   const [commentText, setCommentText] = useState("");
   const [comments, setComments] = useState(data?.comments || []);
+
+  const [updateCommentModel, setUpdateCommentModel] = useState(false);
+  const [updateComment, setUpdateComment] = useState("");
+  const [editIndex, setEditIndex] = useState(null);
 
   const isOwner = user?.email === data?.email;
 
   const handleSend = async (e) => {
     e.preventDefault();
     const comment = commentText.trim();
-
     if (!comment) return;
 
     const formData = {
@@ -66,74 +68,51 @@ const AllQuestionDetails = () => {
       });
     }
   };
-  // update comment
+
+  // Edit Comment Modal trigger
   const handleUpdateComment = (index) => {
-    const oldComment = comments[index].comment;
-
-    Swal.fire({
-      title: "Edit your comment",
-      input: "text",
-      inputValue: oldComment,
-      showCancelButton: true,
-      confirmButtonText: "Update",
-    }).then((result) => {
-      if (result.isConfirmed && result.value.trim()) {
-        const updatedComments = [...comments];
-        updatedComments[index].comment = result.value.trim();
-        setComments(updatedComments);
-
-        Swal.fire("Updated!", "Your comment has been updated.", "success");
-
-        //
-      }
-    });
+    setUpdateComment(comments[index].comment);
+    setEditIndex(index);
+    setUpdateCommentModel(true);
   };
-  // delete comment
- const handleDeleteComment = (index) => {
-  Swal.fire({
-    title: "Are you sure?",
-    text: "You won’t be able to revert this!",
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonColor: "#d33",
-    cancelButtonColor: "#3085d6",
-    confirmButtonText: "Yes, delete it!",
-  }).then((result) => {
-    if (result.isConfirmed) {
-      const commentToDelete = comments[index];
 
-      fetch(`http://localhost:3000/allQuestion/deleteComment/${data._id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: commentToDelete.name,
-          photoURL: commentToDelete.photoURL,
-          comment: commentToDelete.comment,
-          time: commentToDelete.time,
-        }),
-      })
-        .then((res) => res.json())
-        .then((response) => {
-          // Update UI after successful deletion
-          const updatedComments = [...comments];
-          updatedComments.splice(index, 1);
-          setComments(updatedComments);
+  // Edit Modal confirmation
+ const handleUpdateComments = async () => {
+  if (editIndex === null || !updateComment.trim()) return;
 
-          Swal.fire("Deleted!", "Your comment has been deleted.", "success");
-        });
+  const oldComment = comments[editIndex].comment; 
+
+  const response = await fetch(
+    `http://localhost:3000/allQuestion/updateComment/${data._id}`,
+    {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        oldComment: oldComment,
+        updateComment: updateComment.trim(),
+      }),
     }
-  });
+  );
+
+  if (response.ok) {
+    const updated = [...comments];
+    updated[editIndex].comment = updateComment.trim();
+    setComments(updated);
+
+    setUpdateCommentModel(false);
+    setEditIndex(null);
+    setUpdateComment("");
+
+    Swal.fire("Updated!", "Your comment has been updated.", "success");
+  } else {
+    Swal.fire("Error", "Failed to update comment.", "error");
+  }
 };
 
-
-  const handleUpdate = (id) => {
-    Swal.fire("Edit button clicked!", `ID: ${id}`, "info");
-    //
-  };
-  // delete post
-  const handleDelete = (id) => {
+// delete comment
+  const handleDeleteComment = (index) => {
     Swal.fire({
       title: "Are you sure?",
       text: "You won’t be able to revert this!",
@@ -144,7 +123,43 @@ const AllQuestionDetails = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:3000/allQuestion/${id}`, {
+        const commentToDelete = comments[index];
+
+        fetch(`http://localhost:3000/allQuestion/deleteComment/${data._id}`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(commentToDelete),
+        })
+          .then((res) => res.json())
+          .then(() => {
+            const updatedComments = [...comments];
+            updatedComments.splice(index, 1);
+            setComments(updatedComments);
+            Swal.fire("Deleted!", "Your comment has been deleted.", "success");
+          });
+      }
+    });
+  };
+
+  const handleUpdatePost = (_id) => {
+    console.log("clicked",_id)
+     navigate(`/updateAllQuestions/${_id}`);
+  };
+
+  const handleDeletePost = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won’t be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(`http://localhost:3000/allQuestion/id/${id}`, {
           method: "DELETE",
         })
           .then((res) => res.json())
@@ -158,7 +173,7 @@ const AllQuestionDetails = () => {
               navigate(`/`);
             }
           })
-          .catch((error) => {
+          .catch(() => {
             Swal.fire("Error!", "Something went wrong.", "error");
           });
       }
@@ -168,9 +183,8 @@ const AllQuestionDetails = () => {
   return (
     <div className="bg-gray-50 dark:bg-gray-900 min-h-screen text-gray-800 dark:text-white transition duration-300">
       <Navber />
-
       <main className="max-w-4xl mx-auto px-4 py-10 space-y-10">
-        {/* Product Info Card */}
+        {/* Product Info */}
         <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-center sm:gap-6">
             <img
@@ -179,9 +193,7 @@ const AllQuestionDetails = () => {
               className="w-full sm:w-48 h-48 object-cover rounded-md border dark:border-gray-700"
             />
             <div>
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-                {data?.title}
-              </h2>
+              <h2 className="text-2xl font-bold">{data?.title}</h2>
               <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
                 {data?.brand}
               </p>
@@ -198,26 +210,23 @@ const AllQuestionDetails = () => {
               className="w-12 h-12 rounded-full object-cover ring-2 ring-teal-600"
             />
             <div>
-              <p className="font-medium text-gray-800 dark:text-white">
-                {data?.username}
-              </p>
+              <p className="font-medium">{data?.username}</p>
               <p className="text-sm text-gray-500 dark:text-gray-400">
                 {new Date(data?.createdAt).toLocaleString()}
               </p>
             </div>
 
-            {/* update and delete Post button */}
             {isOwner && (
               <div className="flex justify-center gap-4 mt-6 pr-6 pb-4 md:ml-20">
                 <button
-                  onClick={() => handleUpdate(data._id)}
+                  onClick={() => handleUpdatePost(data._id)}
                   className="flex items-center gap-2 bg-teal-500 text-white md:px-4 px-1 py-2 rounded-lg hover:bg-teal-400"
                 >
                   <BiPencil size={18} />
                   Update
                 </button>
                 <button
-                  onClick={() => handleDelete(data._id)}
+                  onClick={() => handleDeletePost(data._id)}
                   className="flex items-center gap-2 bg-red-500 text-white md:px-4 px-1 py-2 rounded-lg hover:bg-red-600"
                 >
                   <BsTrash2 size={18} />
@@ -228,7 +237,7 @@ const AllQuestionDetails = () => {
           </div>
         </div>
 
-        {/* Comments Section */}
+        {/* Comments */}
         <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
           <h3 className="text-lg font-semibold mb-4">Comments</h3>
 
@@ -250,16 +259,15 @@ const AllQuestionDetails = () => {
                       />
                       <div>
                         <p className="font-medium">{cmt.name}</p>
-                        <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                          {cmt.comment}
-                        </p>
                         <p className="text-xs text-gray-400 mt-1">
                           {new Date(cmt.time).toLocaleString()}
+                        </p>
+                        <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                          {cmt.comment}
                         </p>
                       </div>
                     </div>
 
-                    {/* update and delete comment button */}
                     {isCommentOwner && (
                       <div className="flex gap-2 mt-2 sm:ml-auto">
                         <button
@@ -287,27 +295,23 @@ const AllQuestionDetails = () => {
           )}
         </div>
 
-        {/* Comment Box Section */}
+        {/* Comment Input */}
         <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 max-w-md mx-auto mt-10">
-          <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
-            Leave a Comment
-          </h3>
+          <h3 className="text-xl font-semibold">Leave a Comment</h3>
           <p className="text-sm text-gray-600 dark:text-gray-300 mt-2">
             Share your thoughts with us.
           </p>
 
-          {/* Input & Button inside Form */}
           <form
             onSubmit={handleSend}
-            className="mt-4 flex border-2 border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 rounded-lg focus-within:ring-2 focus-within:ring-teal-500 overflow-hidden"
+            className="mt-4 flex border-2 border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 rounded-lg overflow-hidden"
           >
             <input
               type="text"
-              name="comment"
               value={commentText}
               onChange={(e) => setCommentText(e.target.value)}
               placeholder="Write your comment here..."
-              className="w-full p-3 text-sm text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-300 bg-transparent outline-none"
+              className="w-full p-3 text-sm text-gray-900 dark:text-white bg-transparent outline-none"
               required
             />
             <button
@@ -319,6 +323,40 @@ const AllQuestionDetails = () => {
           </form>
         </div>
       </main>
+
+      {/* Edit Comment Modal */}
+      {updateCommentModel && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white dark:bg-gray-800 p-6 rounded-lg w-full max-w-md shadow-lg">
+            <h2 className="text-lg font-semibold mb-4 text-gray-800 dark:text-white">
+              Edit Comment
+            </h2>
+            <input
+              type="text"
+              value={updateComment}
+              onChange={(e) => setUpdateComment(e.target.value)}
+              className="w-full p-3 border rounded mb-4 dark:bg-gray-700 dark:text-white"
+            />
+            <div className="flex justify-end gap-2">
+              <button
+                onClick={() => {
+                  setUpdateCommentModel(false);
+                  setEditIndex(null);
+                }}
+                className="px-4 py-2 bg-gray-400 text-white rounded hover:bg-gray-500"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleUpdateComments}
+                className="px-4 py-2 bg-teal-600 text-white rounded hover:bg-teal-700"
+              >
+                Update
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <Fotter />
     </div>

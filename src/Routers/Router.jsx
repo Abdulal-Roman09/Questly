@@ -11,6 +11,7 @@ import PrivateRoutes from "../Firebase/PrivateRoutes/PrivateRoutes";
 import AllQuestionDetails from "../assets/AllQueries/AllQuestionDetails";
 import LastPosts from "../Pages/Home/LastPost/LastPosts";
 import ErrorPage from "../Pages/Error/ErrorPage";
+import UpdateMyQuestion from "../assets/AllQueries/UpdateMyQuestion";
 
 export const router = createBrowserRouter([
   {
@@ -52,6 +53,12 @@ export const router = createBrowserRouter([
         <AllQuestionDetails />
       </PrivateRoutes>
     ),
+  },{
+    path:"updateAllQuestions/:id",
+    loader: ({ params }) =>
+      fetch(`http://localhost:3000/allQuestion/singleQuestion/${params.id}`),
+    Component:UpdateMyQuestion,
+
   },
   {
     path: "myQueries",

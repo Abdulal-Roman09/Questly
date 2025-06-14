@@ -70,7 +70,7 @@ const Navber = () => {
                 {" "}
                 <img
                   src={user.photoURL}
-                  class="w-10 h-10 rounded-full mx-auto"
+                  className="w-10 h-10 rounded-full mx-auto"
                 />
               </div>
 
