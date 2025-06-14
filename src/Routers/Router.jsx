@@ -9,6 +9,7 @@ import AllQueries from "../assets/AllQueries/AllQueries";
 import MyQueries from "../assets/MyQueries/MyQueries";
 import PrivateRoutes from "../Firebase/PrivateRoutes/PrivateRoutes";
 import AllQuestionDetails from "../assets/AllQueries/AllQuestionDetails";
+import LastPosts from "../Pages/Home/LastPost/LastPosts";
 
 export const router = createBrowserRouter([
   {
@@ -20,7 +21,11 @@ export const router = createBrowserRouter([
         index: true,
         path: "/",
         Component: Home,
-      },
+      },{
+        path:'/lastPost',
+        // loader: () => fetch(`http://localhost:3000/all-Question`),
+        Component:LastPosts,
+      }
     ],
   },
   {

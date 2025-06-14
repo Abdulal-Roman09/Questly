@@ -6,7 +6,7 @@ import SingleQuestion from "./SingleQuestion";
 
 const AllQueries = () => {
   const data = useLoaderData();
-  console.log(data);
+  // console.log(data);
 
   return (
     <>
