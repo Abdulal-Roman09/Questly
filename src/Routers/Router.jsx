@@ -10,22 +10,24 @@ import MyQueries from "../assets/MyQueries/MyQueries";
 import PrivateRoutes from "../Firebase/PrivateRoutes/PrivateRoutes";
 import AllQuestionDetails from "../assets/AllQueries/AllQuestionDetails";
 import LastPosts from "../Pages/Home/LastPost/LastPosts";
+import ErrorPage from "../Pages/Error/ErrorPage";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     Component: Roots,
-    errorElement: <>This is errorPage</>,
+    errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
         index: true,
         path: "/",
         Component: Home,
-      },{
-        path:'/lastPost',
+      },
+      {
+        path: "/lastPost",
         // loader: () => fetch(`http://localhost:3000/all-Question`),
-        Component:LastPosts,
-      }
+        Component: LastPosts,
+      },
     ],
   },
   {
