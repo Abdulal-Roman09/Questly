@@ -7,6 +7,7 @@ import { AuthContext } from "../Firebase/AuthProvider";
 
 const Navber = () => {
   const { user, logout } = useContext(AuthContext);
+  console.log(user);
 
   const [openMenu, setOpenMenu] = useState(false);
   const [openProfile, setOpenProfile] = useState(false);
@@ -39,7 +40,7 @@ const Navber = () => {
         <Link to={"/"}>
           <div className="flex justify-center items-center">
             <img className="h-10" src={Logo} alt="Logo" />
-            <h1 className="text-4xl text-teal-800 font-semibold pb-2">
+            <h1 className="text-4xl text-teal-500 font-semibold pb-2">
               Questly
             </h1>
           </div>
@@ -66,30 +67,34 @@ const Navber = () => {
                 <CgProfile className="text-2xl text-gray-800 dark:text-white" />
               </button>
               {openProfile && (
-                <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded shadow-md z-50 py-2">
+                <div className="absolute right-0 mt-2 w-fit bg-white dark:bg-gray-800 rounded shadow-md z-50 py-2">
                   <div className="px-4 py-2 text-sm text-gray-700 dark:text-white">
-                    👋 {user.displayName || "Anonymous User"}
+                    Name: {user.displayName || "Anonymous User"}
                   </div>
-                  <Link
-                    to="/profile"
-                    className="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700"
-                    onClick={() => setOpenProfile(false)}
-                  >
-                    {user.eamil}
-                  </Link>
                   <Link
                     to="/dashboard"
                     className="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700"
                     onClick={() => setOpenProfile(false)}
                   >
-                    Dashboard
+                    <img
+                      src={user.photoURL}
+                      class="w-14 h-14 rounded-full mx-auto"
+                    />
                   </Link>
+                  <Link
+                    to="/profile"
+                    className="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700"
+                    onClick={() => setOpenProfile(false)}
+                  >
+                    Eamil:{user.email}
+                  </Link>
+
                   <button
                     onClick={() => {
                       logout(); // optional: add confirm
                       setOpenProfile(false);
                     }}
-                    className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700"
+                    className="inline-block rounded bg-teal-600 px-5 py-3 font-medium text-white shadow-sm transition-colors hover:bg-teal-700 mx-20"
                   >
                     Logout
                   </button>
