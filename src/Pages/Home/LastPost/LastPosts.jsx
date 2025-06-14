@@ -23,8 +23,8 @@ const LastPosts = () => {
   }
 
   return (
-    <div className="flex justify-center bg-gray-900 py-10 px-4 dark:bg-gray-950">
-      <div className="flex flex-wrap gap-6 max-w-7xl justify-center">
+    <div className="flex justify-center bg-gray-900 py-10 px-4 dark:bg-gray-900">
+      <div className="flex flex-wrap gap-6  justify-center">
         {data.map((question, index) => (
           <div
             key={index}

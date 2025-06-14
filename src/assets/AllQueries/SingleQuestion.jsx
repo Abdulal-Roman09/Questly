@@ -11,16 +11,16 @@ const SingleQuestion = ({ question }) => {
       />
 
       <div className="p-5">
-        <span className="text-xs font-semibold text-blue-600 uppercase dark:text-blue-400">
-          {question.brand || "Brand"}
+        <span className="text-xs font-semibold text-teal-600 uppercase dark:text-teal-400">
+         Brand:  {question.brand || "Brand"}
         </span>
 
         <h2 className="mt-1 text-xl font-bold text-gray-800 dark:text-white">
-          {question.title || "No Title"}
+         Title:  {question.title || "No Title"}
         </h2>
 
         <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
-          {question.reason || "No description available."}
+          Reason:  {question.reason || "No description available."}
         </p>
 
         <div className="mt-5 flex items-center">
