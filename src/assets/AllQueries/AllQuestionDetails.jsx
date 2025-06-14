@@ -89,27 +89,44 @@ const AllQuestionDetails = () => {
     });
   };
   // delete comment
-  const handleDeleteComment = (index) => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won’t be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#d33",
-      cancelButtonColor: "#3085d6",
-      confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        const updatedComments = [...comments];
-        updatedComments.splice(index, 1);
-        setComments(updatedComments);
+ const handleDeleteComment = (index) => {
+  Swal.fire({
+    title: "Are you sure?",
+    text: "You won’t be able to revert this!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#d33",
+    cancelButtonColor: "#3085d6",
+    confirmButtonText: "Yes, delete it!",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      const commentToDelete = comments[index];
 
-        Swal.fire("Deleted!", "Your comment has been deleted.", "success");
+      fetch(`http://localhost:3000/allQuestion/deleteComment/${data._id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: commentToDelete.name,
+          photoURL: commentToDelete.photoURL,
+          comment: commentToDelete.comment,
+          time: commentToDelete.time,
+        }),
+      })
+        .then((res) => res.json())
+        .then((response) => {
+          // Update UI after successful deletion
+          const updatedComments = [...comments];
+          updatedComments.splice(index, 1);
+          setComments(updatedComments);
 
-        //
-      }
-    });
-  };
+          Swal.fire("Deleted!", "Your comment has been deleted.", "success");
+        });
+    }
+  });
+};
+
 
   const handleUpdate = (id) => {
     Swal.fire("Edit button clicked!", `ID: ${id}`, "info");
