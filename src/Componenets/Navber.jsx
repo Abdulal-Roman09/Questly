@@ -60,12 +60,20 @@ const Navber = () => {
         </nav>
 
         {/* Right-side actions */}
-        <div className="flex items-center gap-4 relative">
+        <div
+          onClick={toggleProfileMenu}
+          className="flex items-center gap-4 relative"
+        >
           {user ? (
             <div className="relative">
-              <button onClick={toggleProfileMenu}>
-                <CgProfile className="text-2xl text-gray-800 dark:text-white" />
-              </button>
+              <div className="">
+                {" "}
+                <img
+                  src={user.photoURL}
+                  class="w-10 h-10 rounded-full mx-auto"
+                />
+              </div>
+
               {openProfile && (
                 <div className="absolute right-0 mt-2 w-fit bg-white dark:bg-gray-800 rounded shadow-md z-50 py-2">
                   <div className="px-4 py-2 text-sm text-gray-700 dark:text-white">
