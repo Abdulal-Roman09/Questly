@@ -7,7 +7,7 @@ import { AuthContext } from "../Firebase/AuthProvider";
 
 const Navber = () => {
   const { user, logout } = useContext(AuthContext);
-  console.log(user);
+  // console.log(user);
 
   const [openMenu, setOpenMenu] = useState(false);
   const [openProfile, setOpenProfile] = useState(false);

@@ -4,7 +4,7 @@ import { Link } from 'react-router'
 const SingleMyQuestion = ({question}) => {
   return (
     <div>
-       <div className="max-w-md bg-white dark:bg-gray-800 rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
+       <div className=" bg-white dark:bg-gray-800 rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
       <img
         className="object-cover w-full h-56 sm:h-64"
         src={question.imageUrl || "https://via.placeholder.com/500x256?text=No+Image"}

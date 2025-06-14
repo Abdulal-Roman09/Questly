@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import Navber from "../../Componenets/Navber";
 import Fotter from "../../Componenets/Fotter";
 import Lottie from "lottie-react";
-import AddLotti from "../../../public/addLotti.json";
+import AddLotti from "/public/addLotti.json";
 import { AuthContext } from "../../Firebase/AuthProvider";
 import Swal from "sweetalert2";
 

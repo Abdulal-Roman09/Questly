@@ -6,9 +6,13 @@ import { AuthContext } from "../../Firebase/AuthProvider";
 import Swal from "sweetalert2";
 import { BiPencil } from "react-icons/bi";
 import { BsTrash2 } from "react-icons/bs";
+import { useNavigate } from "react-router-dom";
 
 const AllQuestionDetails = () => {
   const { user } = useContext(AuthContext);
+
+  const navigate = useNavigate();
+
   const data = useLoaderData();
   const [commentText, setCommentText] = useState("");
   const [comments, setComments] = useState(data?.comments || []);
@@ -80,11 +84,11 @@ const AllQuestionDetails = () => {
 
         Swal.fire("Updated!", "Your comment has been updated.", "success");
 
-        // 
+        //
       }
     });
   };
-// delete comment  
+  // delete comment
   const handleDeleteComment = (index) => {
     Swal.fire({
       title: "Are you sure?",
@@ -109,9 +113,9 @@ const AllQuestionDetails = () => {
 
   const handleUpdate = (id) => {
     Swal.fire("Edit button clicked!", `ID: ${id}`, "info");
-    // 
+    //
   };
-
+  // delete post
   const handleDelete = (id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -123,8 +127,23 @@ const AllQuestionDetails = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        // 
-        Swal.fire("Deleted!", "Your post has been deleted.", "success");
+        fetch(`http://localhost:3000/allQuestion/${id}`, {
+          method: "DELETE",
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.deletedCount > 0) {
+              Swal.fire(
+                "Deleted!",
+                "Your question has been deleted.",
+                "success"
+              );
+              navigate(`/`);
+            }
+          })
+          .catch((error) => {
+            Swal.fire("Error!", "Something went wrong.", "error");
+          });
       }
     });
   };
