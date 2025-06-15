@@ -1,14 +1,11 @@
 import React, { useContext, useState } from "react";
 import { NavLink, Link } from "react-router-dom";
 import Logo from "../assets/Logo.png";
-
 import { CgProfile } from "react-icons/cg";
 import { AuthContext } from "../Firebase/AuthProvider";
 
 const Navber = () => {
   const { user, logout } = useContext(AuthContext);
-  // console.log(user);
-
   const [openMenu, setOpenMenu] = useState(false);
   const [openProfile, setOpenProfile] = useState(false);
 
@@ -40,39 +37,38 @@ const Navber = () => {
         <Link to={"/"}>
           <div className="flex justify-center items-center">
             <img className="h-10" src={Logo} alt="Logo" />
-            <h1 className="text-4xl text-teal-500 font-semibold pb-2">
-              Questly
-            </h1>
+            <h1 className="text-4xl text-teal-500 font-semibold pb-2">Questly</h1>
           </div>
         </Link>
 
         {/* Navigation links (Desktop) */}
         <nav className="hidden md:block">
           <ul className="flex items-center gap-6 text-sm">
-            {navItems.map((item) => (
-              <li key={item.name}>
-                <NavLink to={item.path} className={getLinkClasses}>
-                  {item.name}
-                </NavLink>
-              </li>
-            ))}
+            {navItems
+              .filter((item) => {
+                if (!user) {
+                  return item.name === "Home" || item.name === "AllQueries";
+                }
+                return true;
+              })
+              .map((item) => (
+                <li key={item.name}>
+                  <NavLink to={item.path} className={getLinkClasses}>
+                    {item.name}
+                  </NavLink>
+                </li>
+              ))}
           </ul>
         </nav>
 
         {/* Right-side actions */}
-        <div
-          onClick={toggleProfileMenu}
-          className="flex items-center gap-4 relative"
-        >
+        <div onClick={toggleProfileMenu} className="flex items-center gap-4 relative">
           {user ? (
             <div className="relative">
-              <div className="">
-                {" "}
-                <img
-                  src={user.photoURL}
-                  className="w-10 h-10 rounded-full mx-auto"
-                />
-              </div>
+              <img
+                src={user.photoURL}
+                className="w-10 h-10 rounded-full mx-auto"
+              />
 
               {openProfile && (
                 <div className="absolute right-0 mt-2 w-fit bg-white dark:bg-gray-800 rounded shadow-md z-50 py-2">
@@ -86,7 +82,7 @@ const Navber = () => {
                   >
                     <img
                       src={user.photoURL}
-                      class="w-14 h-14 rounded-full mx-auto"
+                      className="w-14 h-14 rounded-full mx-auto"
                     />
                   </Link>
                   <Link
@@ -94,12 +90,11 @@ const Navber = () => {
                     className="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700"
                     onClick={() => setOpenProfile(false)}
                   >
-                    Eamil:{user.email}
+                    Email: {user.email}
                   </Link>
-
                   <button
                     onClick={() => {
-                      logout(); // optional: add confirm
+                      logout();
                       setOpenProfile(false);
                     }}
                     className="inline-block rounded bg-teal-600 px-5 py-3 font-medium text-white shadow-sm transition-colors hover:bg-teal-700 mx-20"
@@ -140,11 +135,7 @@ const Navber = () => {
               stroke="currentColor"
               strokeWidth="2"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M4 6h16M4 12h16M4 18h16"
-              />
+              <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
             </svg>
           </button>
         </div>
@@ -154,17 +145,24 @@ const Navber = () => {
       {openMenu && (
         <nav className="md:hidden px-4 pb-4">
           <ul className="flex flex-col gap-3 text-sm">
-            {navItems.map((item) => (
-              <li key={item.name}>
-                <NavLink
-                  to={item.path}
-                  onClick={() => setOpenMenu(false)}
-                  className={getLinkClasses}
-                >
-                  {item.name}
-                </NavLink>
-              </li>
-            ))}
+            {navItems
+              .filter((item) => {
+                if (!user) {
+                  return item.name === "Home" || item.name === "AllQueries";
+                }
+                return true;
+              })
+              .map((item) => (
+                <li key={item.name}>
+                  <NavLink
+                    to={item.path}
+                    onClick={() => setOpenMenu(false)}
+                    className={getLinkClasses}
+                  >
+                    {item.name}
+                  </NavLink>
+                </li>
+              ))}
             {!user && (
               <>
                 <li>
