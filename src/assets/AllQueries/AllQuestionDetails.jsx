@@ -116,7 +116,7 @@ const AllQuestionDetails = () => {
   const handleUpdateComments = async () => {
     if (editIndex === null || !updateComment.trim()) return;
 
-    const commn = comments[editIndex].recommendationReason;
+    const oldCommentReason = comments[editIndex].recommendationReason;
 
     // Assuming your backend expects the updated reason and identifier for the comment
     const response = await fetch(
@@ -127,9 +127,8 @@ const AllQuestionDetails = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          oldRecommendationReason: oldCommentReason,
+          oldCommentReason: oldCommentReason,
           newRecommendationReason: updateComment.trim(),
-
           recommenderEmail: comments[editIndex].recommenderEmail,
           timestamp: comments[editIndex].timestamp,
         }),
@@ -145,7 +144,9 @@ const AllQuestionDetails = () => {
       setEditIndex(null);
       setUpdateComment("");
 
-      Swal.fire("Updated!", "Your comment has been updated.", "success");
+    Swal.fire("Updated!", "Your comment has been updated.", "success").then(() => {
+    window.location.reload();
+  });
     } else {
       Swal.fire("Error", "Failed to update comment.", "error");
     }
