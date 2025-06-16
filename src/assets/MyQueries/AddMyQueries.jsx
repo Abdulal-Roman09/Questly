@@ -29,7 +29,7 @@ const AddMyQueries = () => {
       email: user?.email,
       photoURL: user?.photoURL,
       createdAt: new Date().toISOString(),
-      Recommendation: [],
+      comments: [],
     };
 
     const response = await fetch("https://b11-a11-server.vercel.app/allQuestion", {

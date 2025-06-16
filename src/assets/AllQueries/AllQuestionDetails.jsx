@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 import Navber from "../../Componenets/Navber";
 import Fotter from "../../Componenets/Fotter";
 import { useLoaderData } from "react-router";
@@ -10,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 
 const AllQuestionDetails = () => {
   const { user } = useContext(AuthContext);
+  console.log(user);
   const navigate = useNavigate();
   const data = useLoaderData();
   console.log(data);
@@ -36,25 +38,29 @@ const AllQuestionDetails = () => {
     if (!trimmedReason) return;
 
     const formData = {
+      // uniq comment id
+      commentId: uuidv4(),
+
       // Recommendation details
+
       recommendationTitle: RecommendationTitle,
       recommendedProductName: RecommendationName,
       recommendedProductImage: RecommendationImg,
       recommendationReason: trimmedReason,
 
       // Query details
-      queryId: data?._id,
+      queryId: uuidv4(),
+
       queryTitle: data?.title,
       queryProductName: data?.productName,
       queryUserEmail: data?.email,
       queryUserName: data?.name,
 
       // Recommender details
-      recommenderImage:user?.imageUrl,
+      recommenderImage: user?.photoURL,
       recommenderEmail: user?.email,
       recommenderName: user?.displayName,
       timestamp: new Date().toISOString(),
-
     };
 
     try {
@@ -110,7 +116,7 @@ const AllQuestionDetails = () => {
   const handleUpdateComments = async () => {
     if (editIndex === null || !updateComment.trim()) return;
 
-    const oldCommentReason = comments[editIndex].recommendationReason;
+    const commn = comments[editIndex].recommendationReason;
 
     // Assuming your backend expects the updated reason and identifier for the comment
     const response = await fetch(
@@ -121,10 +127,9 @@ const AllQuestionDetails = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          oldRecommendationReason: oldCommentReason, // Pass the old reason to identify
+          oldRecommendationReason: oldCommentReason,
           newRecommendationReason: updateComment.trim(),
-          // You might need to send more data to identify the exact comment to update on the backend
-          // e.g., recommenderEmail, timestamp, etc.
+
           recommenderEmail: comments[editIndex].recommenderEmail,
           timestamp: comments[editIndex].timestamp,
         }),
@@ -160,13 +165,16 @@ const AllQuestionDetails = () => {
       if (result.isConfirmed) {
         const commentToDelete = comments[index];
 
-        fetch(`https://b11-a11-server.vercel.app/allQuestion/deleteComment/${data._id}`, {
-          method: "PATCH", // Assuming PATCH to remove a comment from an array in the document
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(commentToDelete), // Send the comment object to identify it
-        })
+        fetch(
+          `https://b11-a11-server.vercel.app/allQuestion/deleteComment/${data._id}`,
+          {
+            method: "PATCH", // Assuming PATCH to remove a comment from an array in the document
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(commentToDelete), // Send the comment object to identify it
+          }
+        )
           .then((res) => res.json())
           .then(() => {
             const updatedComments = [...comments];
@@ -277,7 +285,9 @@ const AllQuestionDetails = () => {
 
         {/* Recommendation Comments */}
         <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
-          <h3 className="text-lg font-semibold mb-4">Recommendations:{comments.length}</h3>
+          <h3 className="text-lg font-semibold mb-4">
+            Recommendations:{comments.length}
+          </h3>
 
           {comments.length > 0 ? (
             <div className="space-y-4">
@@ -291,27 +301,41 @@ const AllQuestionDetails = () => {
                   >
                     <div className="flex gap-4">
                       <img
-                        src={rec.recommendedProductImage || "/default.jpg"}
+                        src={rec.recommenderImage || "/default.jpg"}
                         alt={rec.recommendedProductName}
                         className="w-10 h-10 rounded-full object-cover"
                       />
-                      <div>
-                        <p className="font-medium">{rec.recommenderName}</p>
-                        <p className="text-xs text-gray-400 mt-1">
-                          {new Date(rec.timestamp).toLocaleString()}
-                        </p>
-                        <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                          <span className="font-semibold">Title:</span>{" "}
-                          {rec.recommendationTitle}
-                        </p>
-                        <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                          <span className="font-semibold">Product:</span>{" "}
-                          {rec.recommendedProductName}
-                        </p>
-                        <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                          <span className="font-semibold">Reason:</span>{" "}
-                          {rec.recommendationReason}
-                        </p>
+                      <div className="flex flex-1 flex-col sm:flex-row gap-4 bg-white dark:bg-gray-800 p-4 rounded-xl shadow-md border dark:border-gray-700">
+                        {/* Text Content */}
+                        <div className="flex-1">
+                          <p className="font-semibold text-lg text-gray-800 dark:text-gray-200">
+                            {rec.recommenderName}
+                          </p>
+                          <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                            {new Date(rec.timestamp).toLocaleString()}
+                          </p>
+                          <p className="text-sm text-gray-700 dark:text-gray-300 mt-2">
+                            <span className="font-medium">Title:</span>{" "}
+                            {rec.recommendationTitle}
+                          </p>
+                          <p className="text-sm text-gray-700 dark:text-gray-300 mt-1">
+                            <span className="font-medium">Product:</span>{" "}
+                            {rec.recommendedProductName}
+                          </p>
+                          <p className="text-sm text-gray-700 dark:text-gray-300 mt-1">
+                            <span className="font-medium">Reason:</span>{" "}
+                            {rec.recommendationReason}
+                          </p>
+                        </div>
+
+                        {/* Image */}
+                        <div className="w-full sm:w-48 flex justify-center sm:justify-end">
+                          <img
+                            src={rec.recommendedProductImage}
+                            alt={rec.recommendedProductName}
+                            className="w-full sm:w-48 h-auto max-h-32 object-cover rounded-xl border dark:border-gray-600"
+                          />
+                        </div>
                       </div>
                     </div>
 

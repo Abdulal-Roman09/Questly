@@ -34,7 +34,8 @@ const RecommendationCard = ({ recommendation }) => {
           <img
             className="h-10 w-10 rounded-full object-cover border border-gray-300 dark:border-gray-600"
             src={
-              recommendation.photoURL ||
+              recommendation.
+recommenderImage ||
               "https://via.placeholder.com/40?text=User"
             }
             alt={recommendation.recommenderName || "User Avatar"}
