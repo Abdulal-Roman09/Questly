@@ -12,7 +12,7 @@ const AllQuestionDetails = () => {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
   const data = useLoaderData();
-  // console.log(data);
+  console.log(data);
 
   // set all type of text herer
 
@@ -50,9 +50,11 @@ const AllQuestionDetails = () => {
       queryUserName: data?.name,
 
       // Recommender details
+      recommenderImage:user?.imageUrl,
       recommenderEmail: user?.email,
       recommenderName: user?.displayName,
       timestamp: new Date().toISOString(),
+
     };
 
     try {
@@ -275,7 +277,7 @@ const AllQuestionDetails = () => {
 
         {/* Recommendation Comments */}
         <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
-          <h3 className="text-lg font-semibold mb-4">Recommendations</h3>
+          <h3 className="text-lg font-semibold mb-4">Recommendations:{comments.length}</h3>
 
           {comments.length > 0 ? (
             <div className="space-y-4">
