@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import Navber from "../../Componenets/Navber";
 import Fotter from "../../Componenets/Fotter";
-import { useLoaderData } from "react-router";
+import { Link, useLoaderData } from "react-router";
 import SingleMyQuestion from "./SingleMyQuestion";
 import { AuthContext } from "../../Firebase/AuthProvider";
 
@@ -19,6 +19,15 @@ const MyQueries = () => {
   return (
     <div>
       <Navber></Navber>
+    
+       <Link to={"/addQuerie"} className="flex justify-center bg-gray-900 pt-5
+       ">
+       <button className="bg-teal-600 rounded-sm px-5 py-2" >
+          ←  Add Queries
+       </button></Link>
+       
+      
+     
       <div className="flex justify-center bg-gray-900 py-10 px-4 dark:bg-gray-900">
         <div className="flex flex-wrap gap-6 justify-center">
           {data.map((question, index) => (

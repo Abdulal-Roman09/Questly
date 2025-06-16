@@ -24,7 +24,7 @@ const LastPosts = () => {
 
   return (
     <>
-    <p className="text-center bg-gray-900 text-emerald-400 text-3xl md:4xl lg:5xl font-semibold">Last 6 Post</p>
+    <p className="text-center bg-gray-900 text-emerald-400 text-3xl md:4xl lg:5xl font-semibold">Recent Queries:</p>
       <div className="flex justify-center bg-gray-900 py-10 px-4 dark:bg-gray-900">
         <div className="flex flex-wrap gap-6  justify-center">
           {data.map((question, index) => (

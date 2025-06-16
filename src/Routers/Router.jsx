@@ -12,6 +12,8 @@ import AllQuestionDetails from "../assets/AllQueries/AllQuestionDetails";
 import LastPosts from "../Pages/Home/LastPost/LastPosts";
 import ErrorPage from "../Pages/Error/ErrorPage";
 import UpdateMyQuestion from "../assets/AllQueries/UpdateMyQuestion";
+import MyRecommendations from "../MyRecommendations/MyRecommendations";
+import RecommendationsForMe from "../RecommendationsForMe/RecommendationsForMe";
 
 export const router = createBrowserRouter([
   {
@@ -53,12 +55,12 @@ export const router = createBrowserRouter([
         <AllQuestionDetails />
       </PrivateRoutes>
     ),
-  },{
-    path:"updateAllQuestions/:id",
+  },
+  {
+    path: "updateAllQuestions/:id",
     loader: ({ params }) =>
       fetch(`http://localhost:3000/allQuestion/singleQuestion/${params.id}`),
-    Component:UpdateMyQuestion,
-
+    Component: UpdateMyQuestion,
   },
   {
     path: "myQueries",
@@ -75,6 +77,22 @@ export const router = createBrowserRouter([
     element: (
       <PrivateRoutes>
         <AddMyQueries />
+      </PrivateRoutes>
+    ),
+  },
+  {
+    path: "myRecommendations",
+    element: (
+      <PrivateRoutes>
+        <MyRecommendations></MyRecommendations>
+      </PrivateRoutes>
+    ),
+  },
+  {
+    path: "recommendationForMe",
+    element: (
+      <PrivateRoutes>
+        <RecommendationsForMe></RecommendationsForMe>
       </PrivateRoutes>
     ),
   },

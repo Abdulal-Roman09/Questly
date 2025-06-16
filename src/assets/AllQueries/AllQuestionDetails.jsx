@@ -12,8 +12,15 @@ const AllQuestionDetails = () => {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
   const data = useLoaderData();
+  console.log(data);
 
-  const [commentText, setCommentText] = useState("");
+  // set all type of text herer
+
+  const [RecommendationName, setRecommendationName] = useState("");
+  const [RecommendationTitle, setRecommendationTitle] = useState("");
+  const [RecommendationImg, setRecommendationImg] = useState("");
+  const [RecommendationReson, setRecommendationReson] = useState("");
+
   const [comments, setComments] = useState(data?.comments || []);
 
   const [updateCommentModel, setUpdateCommentModel] = useState(false);
@@ -24,15 +31,28 @@ const AllQuestionDetails = () => {
 
   const handleSend = async (e) => {
     e.preventDefault();
-    const comment = commentText.trim();
-    if (!comment) return;
+
+    const trimmedReason = RecommendationReson.trim();
+    if (!trimmedReason) return;
 
     const formData = {
-      comment,
-      name: user?.displayName,
-      email: user?.email,
-      photoURL: user?.photoURL,
-      time: new Date().toISOString(),
+      // Recommendation details
+      recommendationTitle: RecommendationTitle,
+      recommendedProductName: RecommendationName,
+      recommendedProductImage: RecommendationImg,
+      recommendationReason: trimmedReason,
+
+      // Query details
+      queryId: data?._id,
+      queryTitle: data?.title,
+      queryProductName: data?.productName,
+      queryUserEmail: data?.email,
+      queryUserName: data?.name,
+
+      // Recommender details
+      recommenderEmail: user?.email,
+      recommenderName: user?.displayName,
+      timestamp: new Date().toISOString(),
     };
 
     try {
@@ -48,8 +68,11 @@ const AllQuestionDetails = () => {
       );
 
       if (response.ok) {
-        setComments((prev) => [...prev, formData]);
-        setCommentText("");
+        setRecommendationReson((prev) => [...prev, formData]);
+        setRecommendationReson("");
+        setRecommendationTitle("");
+        setRecommendationImg("");
+        setRecommendationName("");
         Swal.fire({
           icon: "success",
           title: "Comment Added",
@@ -77,41 +100,41 @@ const AllQuestionDetails = () => {
   };
 
   // Edit Modal confirmation
- const handleUpdateComments = async () => {
-  if (editIndex === null || !updateComment.trim()) return;
+  const handleUpdateComments = async () => {
+    if (editIndex === null || !updateComment.trim()) return;
 
-  const oldComment = comments[editIndex].comment; 
+    const oldComment = comments[editIndex].comment;
 
-  const response = await fetch(
-    `http://localhost:3000/allQuestion/updateComment/${data._id}`,
-    {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        oldComment: oldComment,
-        updateComment: updateComment.trim(),
-      }),
+    const response = await fetch(
+      `http://localhost:3000/allQuestion/updateComment/${data._id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          oldComment: oldComment,
+          updateComment: updateComment.trim(),
+        }),
+      }
+    );
+
+    if (response.ok) {
+      const updated = [...comments];
+      updated[editIndex].comment = updateComment.trim();
+      setComments(updated);
+
+      setUpdateCommentModel(false);
+      setEditIndex(null);
+      setUpdateComment("");
+
+      Swal.fire("Updated!", "Your comment has been updated.", "success");
+    } else {
+      Swal.fire("Error", "Failed to update comment.", "error");
     }
-  );
+  };
 
-  if (response.ok) {
-    const updated = [...comments];
-    updated[editIndex].comment = updateComment.trim();
-    setComments(updated);
-
-    setUpdateCommentModel(false);
-    setEditIndex(null);
-    setUpdateComment("");
-
-    Swal.fire("Updated!", "Your comment has been updated.", "success");
-  } else {
-    Swal.fire("Error", "Failed to update comment.", "error");
-  }
-};
-
-// delete comment
+  // delete comment
   const handleDeleteComment = (index) => {
     Swal.fire({
       title: "Are you sure?",
@@ -144,8 +167,8 @@ const AllQuestionDetails = () => {
   };
 
   const handleUpdatePost = (_id) => {
-    console.log("clicked",_id)
-     navigate(`/updateAllQuestions/${_id}`);
+    console.log("clicked", _id);
+    navigate(`/updateAllQuestions/${_id}`);
   };
 
   const handleDeletePost = (id) => {
@@ -237,14 +260,14 @@ const AllQuestionDetails = () => {
           </div>
         </div>
 
-        {/* Comments */}
+        {/* Recommendation Comments */}
         <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
-          <h3 className="text-lg font-semibold mb-4">Comments</h3>
+          <h3 className="text-lg font-semibold mb-4">Recommendations:  {comments.length}</h3>
 
           {comments.length > 0 ? (
             <div className="space-y-4">
-              {comments.map((cmt, i) => {
-                const isCommentOwner = user?.email === cmt.email;
+              {comments.map((rec, i) => {
+                const isCommentOwner = user?.email === rec.recommenderEmail;
 
                 return (
                   <div
@@ -253,17 +276,26 @@ const AllQuestionDetails = () => {
                   >
                     <div className="flex gap-4">
                       <img
-                        src={cmt.photoURL}
-                        alt={cmt.name}
+                        src={rec.recommendedProductImage || "/default.jpg"}
+                        alt={rec.recommendedProductName}
                         className="w-10 h-10 rounded-full object-cover"
                       />
                       <div>
-                        <p className="font-medium">{cmt.name}</p>
+                        <p className="font-medium">{rec.recommenderName}</p>
                         <p className="text-xs text-gray-400 mt-1">
-                          {new Date(cmt.time).toLocaleString()}
+                          {new Date(rec.timestamp).toLocaleString()}
                         </p>
                         <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                          {cmt.comment}
+                          <span className="font-semibold">Title:</span>{" "}
+                          {rec.recommendationTitle}
+                        </p>
+                        <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                          <span className="font-semibold">Product:</span>{" "}
+                          {rec.recommendedProductName}
+                        </p>
+                        <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                          <span className="font-semibold">Reason:</span>{" "}
+                          {rec.recommendationReason}
                         </p>
                       </div>
                     </div>
@@ -291,7 +323,7 @@ const AllQuestionDetails = () => {
               })}
             </div>
           ) : (
-            <p className="text-sm text-gray-500">No comments yet.</p>
+            <p className="text-sm text-gray-500">No recommendations yet.</p>
           )}
         </div>
 
@@ -304,19 +336,88 @@ const AllQuestionDetails = () => {
 
           <form
             onSubmit={handleSend}
-            className="mt-4 flex border-2 border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 rounded-lg overflow-hidden"
+            className="mt-4 flex flex-col gap-4 border-2 border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 rounded-lg p-4"
           >
-            <input
-              type="text"
-              value={commentText}
-              onChange={(e) => setCommentText(e.target.value)}
-              placeholder="Write your comment here..."
-              className="w-full p-3 text-sm text-gray-900 dark:text-white bg-transparent outline-none"
-              required
-            />
+            {/*Recommendation Name Field */}
+            <div className="flex flex-col gap-1">
+              <label
+                htmlFor="name"
+                className="text-sm font-medium text-gray-700 dark:text-gray-200"
+              >
+                Recommendation Name:
+              </label>
+              <input
+                type="text"
+                id="name"
+                value={RecommendationName}
+                onChange={(e) => setRecommendationName(e.target.value)}
+                placeholder="Enter your  Recommendation Product name"
+                className="w-full p-3 text-sm text-gray-900 dark:text-white bg-white dark:bg-gray-800 border rounded-md outline-none focus:ring-2 focus:ring-teal-500"
+                required
+              />
+            </div>
+            {/*Recommendation Title
+             */}
+            <div className="flex flex-col gap-1">
+              <label
+                htmlFor="name"
+                className="text-sm font-medium text-gray-700 dark:text-gray-200"
+              >
+                Recommendation Title:
+              </label>
+              <input
+                type="text"
+                id="name"
+                value={RecommendationTitle}
+                onChange={(e) => setRecommendationTitle(e.target.value)}
+                placeholder="Enter your Recommendation Title"
+                className="w-full p-3 text-sm text-gray-900 dark:text-white bg-white dark:bg-gray-800 border rounded-md outline-none focus:ring-2 focus:ring-teal-500"
+                required
+              />
+            </div>
+            {/* Recommended Product Image
+             */}
+            <div className="flex flex-col gap-1">
+              <label
+                htmlFor="name"
+                className="text-sm font-medium text-gray-700 dark:text-gray-200"
+              >
+                Recommended Product Image:
+              </label>
+              <input
+                type="text"
+                id="name"
+                value={RecommendationImg}
+                onChange={(e) => setRecommendationImg(e.target.value)}
+                placeholder="Enter your  Recommended Product Image name"
+                className="w-full p-3 text-sm text-gray-900 dark:text-white bg-white dark:bg-gray-800 border rounded-md outline-none focus:ring-2 focus:ring-teal-500"
+                required
+              />
+            </div>
+            {/* Recommendation reason
+             */}
+            <div className="flex flex-col gap-1">
+              <label
+                htmlFor="comment"
+                className="text-sm font-medium text-gray-700 dark:text-gray-200"
+              >
+                Recommendation reason :
+              </label>
+              <input
+                type="text"
+                id="comment"
+                value={RecommendationReson}
+                onChange={(e) => setRecommendationReson(e.target.value)}
+                placeholder="Write yourRecommendation reason here..."
+                className="w-full p-3 text-sm text-gray-900 dark:text-white bg-white dark:bg-gray-800 border rounded-md outline-none focus:ring-2 focus:ring-teal-500"
+                required
+              />
+            </div>
+
+            {/* Submit Button */}
             <button
               type="submit"
-              className="bg-teal-600 text-white px-4 hover:bg-teal-700 transition"
+              className="bg-teal-600 text-white px-4 py-2 rounded-md hover:bg-teal-700 transition"
             >
               Send
             </button>
