@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { NavLink, Link } from "react-router-dom";
-import Logo from "../assets/Logo.png";
+import Logo from "../assets/Logo2.png";
 import { CgProfile } from "react-icons/cg";
 import { AuthContext } from "../Firebase/AuthProvider";
 
