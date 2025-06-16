@@ -12,7 +12,7 @@ const AllQuestionDetails = () => {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
   const data = useLoaderData();
-  console.log(data);
+  // console.log(data);
 
   // set all type of text herer
 
