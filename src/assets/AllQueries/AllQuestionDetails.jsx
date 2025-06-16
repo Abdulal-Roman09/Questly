@@ -57,7 +57,7 @@ const AllQuestionDetails = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:3000/allQuestion/addComment/${data._id}`,
+        `https://b11-a11-server.vercel.app/allQuestion/addComment/${data._id}`,
         {
           method: "POST",
           headers: {
@@ -112,7 +112,7 @@ const AllQuestionDetails = () => {
 
     // Assuming your backend expects the updated reason and identifier for the comment
     const response = await fetch(
-      `http://localhost:3000/allQuestion/updateComment/${data._id}`,
+      `https://b11-a11-server.vercel.app/allQuestion/updateComment/${data._id}`,
       {
         method: "PATCH",
         headers: {
@@ -158,7 +158,7 @@ const AllQuestionDetails = () => {
       if (result.isConfirmed) {
         const commentToDelete = comments[index];
 
-        fetch(`http://localhost:3000/allQuestion/deleteComment/${data._id}`, {
+        fetch(`https://b11-a11-server.vercel.app/allQuestion/deleteComment/${data._id}`, {
           method: "PATCH", // Assuming PATCH to remove a comment from an array in the document
           headers: {
             "Content-Type": "application/json",
@@ -195,7 +195,7 @@ const AllQuestionDetails = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:3000/allQuestion/id/${id}`, {
+        fetch(`https://b11-a11-server.vercel.app/allQuestion/id/${id}`, {
           method: "DELETE",
         })
           .then((res) => res.json())
@@ -253,17 +253,17 @@ const AllQuestionDetails = () => {
             </div>
 
             {isOwner && (
-              <div className="flex justify-center gap-4 mt-6 pr-6 pb-4 md:ml-20">
+              <div className="flex justify-center md:gap-4 gap-1 mt-6  pb-4 md:ml-20">
                 <button
                   onClick={() => handleUpdatePost(data._id)}
-                  className="flex items-center gap-2 bg-teal-500 text-white md:px-4 px-1 py-2 rounded-lg hover:bg-teal-400"
+                  className="flex items-center md:gap-4 gap-1 bg-teal-500 text-white md:px-4 px-1 py-2 rounded-lg hover:bg-teal-400"
                 >
                   <BiPencil size={18} />
                   Update
                 </button>
                 <button
                   onClick={() => handleDeletePost(data._id)}
-                  className="flex items-center gap-2 bg-red-500 text-white md:px-4 px-1 py-2 rounded-lg hover:bg-red-600"
+                  className="flex items-center md:gap-4 gap-1  bg-red-500 text-white md:px-4 px-1 py-2 rounded-lg hover:bg-red-600"
                 >
                   <BsTrash2 size={18} />
                   Delete

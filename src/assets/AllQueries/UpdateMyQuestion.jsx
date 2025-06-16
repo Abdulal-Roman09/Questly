@@ -27,7 +27,7 @@ const UpdateMyQuestion = () => {
     };
 
     try {
-      const response = await fetch(`http://localhost:3000/allQuestion/id/${id}`, {
+      const response = await fetch(`https://b11-a11-server.vercel.app/allQuestion/id/${id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",

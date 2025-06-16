@@ -10,7 +10,7 @@ const MyQueries = () => {
   const [data, setData] = useState([]);
   useEffect(() => {
     if (user?.email) {
-      fetch(`http://localhost:3000/allQuestion/email/${user.email}`)
+      fetch(`https://b11-a11-server.vercel.app/allQuestion/email/${user.email}`)
         .then((res) => res.json())
         .then((result) => setData(result));
     }

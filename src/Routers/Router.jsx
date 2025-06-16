@@ -28,7 +28,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/lastPost",
-        // loader: () => fetch(`http://localhost:3000/all-Question`),
+        // loader: () => fetch(`https://b11-a11-server.vercel.app/all-Question`),
         Component: LastPosts,
       },
     ],
@@ -43,13 +43,13 @@ export const router = createBrowserRouter([
   },
   {
     path: "AllQueries",
-    loader: () => fetch(`http://localhost:3000/allQuestion`),
+    loader: () => fetch(`https://b11-a11-server.vercel.app/allQuestion`),
     Component: AllQueries,
   },
   {
     path: "AllQusetinDetails/:id",
     loader: ({ params }) =>
-      fetch(`http://localhost:3000/allQuestion/singleQuestion/${params.id}`),
+      fetch(`https://b11-a11-server.vercel.app/allQuestion/singleQuestion/${params.id}`),
     element: (
       <PrivateRoutes>
         <AllQuestionDetails />
@@ -59,13 +59,13 @@ export const router = createBrowserRouter([
   {
     path: "updateAllQuestions/:id",
     loader: ({ params }) =>
-      fetch(`http://localhost:3000/allQuestion/singleQuestion/${params.id}`),
+      fetch(`https://b11-a11-server.vercel.app/allQuestion/singleQuestion/${params.id}`),
     Component: UpdateMyQuestion,
   },
   {
     path: "myQueries",
     // loader: ({ params }) =>
-    //   fetch(`http://localhost:3000/allQuestion/${params.email}`),
+    //   fetch(`https://b11-a11-server.vercel.app/allQuestion/${params.email}`),
     element: (
       <PrivateRoutes>
         <MyQueries />

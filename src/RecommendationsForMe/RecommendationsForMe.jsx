@@ -11,7 +11,7 @@ const RecommendationsForMe = () => {
   useEffect(() => {
     if (user?.email) {
       fetch(
-        `http://localhost:3000/recommendations/queryUserEmail/${user?.email}`
+        `https://b11-a11-server.vercel.app/recommendations/queryUserEmail/${user?.email}`
       )
         .then((res) => res.json())
         .then((result) => {

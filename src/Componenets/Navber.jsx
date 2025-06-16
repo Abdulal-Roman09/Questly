@@ -22,7 +22,6 @@ const Navber = () => {
     { name: "AllQueries", path: "/AllQueries" },
     { name: "AddMyQueries", path: "/addQuerie" },
     { name: "My Queries", path: "/myQueries" },
-    { name: "Services", path: "/My recommendations" },
     { name: "RecommendationsForMe", path: "/recommendationForMe",},
     { name: "MyRecommendations", path: "/myRecommendations", },
   ];

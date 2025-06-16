@@ -32,7 +32,7 @@ const AddMyQueries = () => {
       Recommendation: [],
     };
 
-    const response = await fetch("http://localhost:3000/allQuestion", {
+    const response = await fetch("https://b11-a11-server.vercel.app/allQuestion", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
