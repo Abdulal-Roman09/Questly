@@ -24,21 +24,7 @@ const AllQuestionDetails = () => {
   const [comments, setComments] = useState(data?.comments || []);
 
   const [updateCommentModel, setUpdateCommentModel] = useState(false);
-
-  // update comment
-  // Recommendation Title
-  // Recommended product Name
-  // Recommended Product Image
-  // Recommendation reason
-
-  const [updateRecommendationReason, setUpdateRecommendationReason] =
-    useState("");
-  const [updateRecommendationName, setUpdateRecommendationName] = useState("");
-  const [updateRecommendationTitle, setUpdateRecommendationTitel] =
-    useState("");
-  const [updateRecommendationImage, setUpdateRecommendationImage] =
-    useState("");
-
+  const [updateComment, setUpdateComment] = useState("");
   const [editIndex, setEditIndex] = useState(null);
 
   const isOwner = user?.email === data?.email;
@@ -82,11 +68,15 @@ const AllQuestionDetails = () => {
       );
 
       if (response.ok) {
-        setRecommendationReson((prev) => [...prev, formData]);
+        // Update the comments state with the new recommendation
+        setComments((prevComments) => [...prevComments, formData]);
+
+        // Clear the form fields
         setRecommendationReson("");
         setRecommendationTitle("");
         setRecommendationImg("");
         setRecommendationName("");
+
         Swal.fire({
           icon: "success",
           title: "Comment Added",
@@ -108,7 +98,8 @@ const AllQuestionDetails = () => {
 
   // Edit Comment Modal trigger
   const handleUpdateComment = (index) => {
-    setUpdateComment(comments[index].comment);
+    // Correctly get the comment string from the object
+    setUpdateComment(comments[index].recommendationReason);
     setEditIndex(index);
     setUpdateCommentModel(true);
   };
@@ -117,8 +108,9 @@ const AllQuestionDetails = () => {
   const handleUpdateComments = async () => {
     if (editIndex === null || !updateComment.trim()) return;
 
-    const oldComment = comments[editIndex].comment;
+    const oldCommentReason = comments[editIndex].recommendationReason;
 
+    // Assuming your backend expects the updated reason and identifier for the comment
     const response = await fetch(
       `http://localhost:3000/allQuestion/updateComment/${data._id}`,
       {
@@ -127,15 +119,19 @@ const AllQuestionDetails = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          oldComment: oldComment,
-          updateComment: updateComment.trim(),
+          oldRecommendationReason: oldCommentReason, // Pass the old reason to identify
+          newRecommendationReason: updateComment.trim(),
+          // You might need to send more data to identify the exact comment to update on the backend
+          // e.g., recommenderEmail, timestamp, etc.
+          recommenderEmail: comments[editIndex].recommenderEmail,
+          timestamp: comments[editIndex].timestamp,
         }),
       }
     );
 
     if (response.ok) {
       const updated = [...comments];
-      updated[editIndex].comment = updateComment.trim();
+      updated[editIndex].recommendationReason = updateComment.trim(); // Update the reason
       setComments(updated);
 
       setUpdateCommentModel(false);
@@ -163,11 +159,11 @@ const AllQuestionDetails = () => {
         const commentToDelete = comments[index];
 
         fetch(`http://localhost:3000/allQuestion/deleteComment/${data._id}`, {
-          method: "PATCH",
+          method: "PATCH", // Assuming PATCH to remove a comment from an array in the document
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(commentToDelete),
+          body: JSON.stringify(commentToDelete), // Send the comment object to identify it
         })
           .then((res) => res.json())
           .then(() => {
@@ -175,6 +171,9 @@ const AllQuestionDetails = () => {
             updatedComments.splice(index, 1);
             setComments(updatedComments);
             Swal.fire("Deleted!", "Your comment has been deleted.", "success");
+          })
+          .catch(() => {
+            Swal.fire("Error!", "Something went wrong.", "error");
           });
       }
     });
@@ -276,9 +275,7 @@ const AllQuestionDetails = () => {
 
         {/* Recommendation Comments */}
         <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
-          <h3 className="text-lg font-semibold mb-4">
-            Recommendations: {comments.length}
-          </h3>
+          <h3 className="text-lg font-semibold mb-4">Recommendations</h3>
 
           {comments.length > 0 ? (
             <div className="space-y-4">
@@ -357,33 +354,32 @@ const AllQuestionDetails = () => {
             {/*Recommendation Name Field */}
             <div className="flex flex-col gap-1">
               <label
-                htmlFor="name"
+                htmlFor="recommendationName"
                 className="text-sm font-medium text-gray-700 dark:text-gray-200"
               >
                 Recommendation Name:
               </label>
               <input
                 type="text"
-                id="name"
+                id="recommendationName"
                 value={RecommendationName}
                 onChange={(e) => setRecommendationName(e.target.value)}
-                placeholder="Enter your  Recommendation Product name"
+                placeholder="Enter your Recommendation Product name"
                 className="w-full p-3 text-sm text-gray-900 dark:text-white bg-white dark:bg-gray-800 border rounded-md outline-none focus:ring-2 focus:ring-teal-500"
                 required
               />
             </div>
-            {/*Recommendation Title
-             */}
+            {/*Recommendation Title */}
             <div className="flex flex-col gap-1">
               <label
-                htmlFor="name"
+                htmlFor="recommendationTitle"
                 className="text-sm font-medium text-gray-700 dark:text-gray-200"
               >
                 Recommendation Title:
               </label>
               <input
                 type="text"
-                id="name"
+                id="recommendationTitle"
                 value={RecommendationTitle}
                 onChange={(e) => setRecommendationTitle(e.target.value)}
                 placeholder="Enter your Recommendation Title"
@@ -391,40 +387,38 @@ const AllQuestionDetails = () => {
                 required
               />
             </div>
-            {/* Recommended Product Image
-             */}
+            {/* Recommended Product Image */}
             <div className="flex flex-col gap-1">
               <label
-                htmlFor="name"
+                htmlFor="recommendationImg"
                 className="text-sm font-medium text-gray-700 dark:text-gray-200"
               >
                 Recommended Product Image:
               </label>
               <input
                 type="text"
-                id="name"
+                id="recommendationImg"
                 value={RecommendationImg}
                 onChange={(e) => setRecommendationImg(e.target.value)}
-                placeholder="Enter your  Recommended Product Image name"
+                placeholder="Enter your Recommended Product Image URL"
                 className="w-full p-3 text-sm text-gray-900 dark:text-white bg-white dark:bg-gray-800 border rounded-md outline-none focus:ring-2 focus:ring-teal-500"
                 required
               />
             </div>
-            {/* Recommendation reason
-             */}
+            {/* Recommendation reason */}
             <div className="flex flex-col gap-1">
               <label
-                htmlFor="comment"
+                htmlFor="recommendationReason"
                 className="text-sm font-medium text-gray-700 dark:text-gray-200"
               >
                 Recommendation reason :
               </label>
               <input
                 type="text"
-                id="comment"
+                id="recommendationReason"
                 value={RecommendationReson}
                 onChange={(e) => setRecommendationReson(e.target.value)}
-                placeholder="Write yourRecommendation reason here..."
+                placeholder="Write your Recommendation reason here..."
                 className="w-full p-3 text-sm text-gray-900 dark:text-white bg-white dark:bg-gray-800 border rounded-md outline-none focus:ring-2 focus:ring-teal-500"
                 required
               />
@@ -445,40 +439,17 @@ const AllQuestionDetails = () => {
       {updateCommentModel && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white dark:bg-gray-800 p-6 rounded-lg w-full max-w-md shadow-lg">
-            <h2 className="text-lg font-semibold mb-4 text-gray-800 dark:text-white">
-              Edit Recommended product Name
+            <h2 className="text-xl font-bold mb-4 text-gray-800 dark:text-white text-center">
+              Edit Your Recommendation Reason Only <br />
+              <span className="text-red-600 dark:text-red-400 text-lg font-medium">
+                Title, Brand, and Image
+              </span>
+              <br /> are fixed
             </h2>
             <input
               type="text"
-              value={updateRecommendationName}
-              onChange={(e) => setUpdateRecommendationName(e.target.value)}
-              className="w-full p-3 border rounded mb-4 dark:bg-gray-700 dark:text-white"
-            />
-            <h2 className="text-lg font-semibold mb-4 text-gray-800 dark:text-white">
-              Edit Recommended Product Image
-            </h2>
-            <input
-              type="text"
-              value={updateRecommendationImage}
-              onChange={(e) => setUpdateRecommendationImage(e.target.value)}
-              className="w-full p-3 border rounded mb-4 dark:bg-gray-700 dark:text-white"
-            />
-            <h2 className="text-lg font-semibold mb-4 text-gray-800 dark:text-white">
-              Edit Recommendation Reson
-            </h2>
-            <input
-              type="text"
-              value={updateRecommendationReason}
-              onChange={(e) => setUpdateRecommendationReason(e.target.value)}
-              className="w-full p-3 border rounded mb-4 dark:bg-gray-700 dark:text-white"
-            />
-            <h2 className="text-lg font-semibold mb-4 text-gray-800 dark:text-white">
-              Edit Recommendation Titel
-            </h2>
-            <input
-              type="text"
-              value={updateRecommendationTitle}
-              onChange={(e) => setUpdateRecommendationTitel(e.target.value)}
+              value={updateComment}
+              onChange={(e) => setUpdateComment(e.target.value)}
               className="w-full p-3 border rounded mb-4 dark:bg-gray-700 dark:text-white"
             />
             <div className="flex justify-end gap-2">

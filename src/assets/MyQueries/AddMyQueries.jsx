@@ -29,7 +29,7 @@ const AddMyQueries = () => {
       email: user?.email,
       photoURL: user?.photoURL,
       createdAt: new Date().toISOString(),
-      comments: [],
+      Recommendation: [],
     };
 
     const response = await fetch("http://localhost:3000/allQuestion", {

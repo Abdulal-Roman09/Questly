@@ -46,25 +46,25 @@ const Fotter = () => {
                 <li>
                   <Link to={"/AllQueries"}>
                     {" "}
-                    <a href="#" className="hover:underline">
+                    <p  className="hover:underline">
                       Explore Recommendations
-                    </a>
+                    </p>
                   </Link>
                 </li>
                 <li>
                   <Link to={"/AllQueries"}>
-                    <a href="#" className="hover:underline">
+                    <p  className="hover:underline">
                       Submit a Recommendation
-                    </a>
+                    </p>
                   </Link>
                 </li>
 
                 <li>
                   <Link to={"/lastPost"}>
                     {" "}
-                    <a href="#" className="hover:underline">
+                    <p className="hover:underline">
                       FAQs & Help
-                    </a>
+                    </p>
                   </Link>
                 </li>
               </ul>
