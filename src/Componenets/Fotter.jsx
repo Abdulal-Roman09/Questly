@@ -7,6 +7,7 @@ import {
   FaHeart,
 } from "react-icons/fa";
 import FotterImg from "../assets/img/FotterImg.jpg";
+import { Link } from "react-router";
 
 const Fotter = () => {
   return (
@@ -16,7 +17,7 @@ const Fotter = () => {
         <div className="relative h-48 lg:h-auto lg:col-span-2">
           <img
             src={FotterImg}
-            className="absolute inset-0 h-full w-full object-cover rounded-2xl"
+            className="absolute inset-0 h-full w-full object-cover rounded-2xl px-2"
           />
         </div>
 
@@ -43,20 +44,28 @@ const Fotter = () => {
               </h2>
               <ul className="mt-4 space-y-2 text-sm">
                 <li>
-                  <a href="#" className="hover:underline">
-                    Explore Recommendations
-                  </a>
+                  <Link to={"/AllQueries"}>
+                    {" "}
+                    <a href="#" className="hover:underline">
+                      Explore Recommendations
+                    </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#" className="hover:underline">
-                    Submit a Recommendation
-                  </a>
+                  <Link to={"/AllQueries"}>
+                    <a href="#" className="hover:underline">
+                      Submit a Recommendation
+                    </a>
+                  </Link>
                 </li>
 
                 <li>
-                  <a href="#" className="hover:underline">
-                    FAQs & Help
-                  </a>
+                  <Link to={"/lastPost"}>
+                    {" "}
+                    <a href="#" className="hover:underline">
+                      FAQs & Help
+                    </a>
+                  </Link>
                 </li>
               </ul>
             </div>

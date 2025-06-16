@@ -24,7 +24,21 @@ const AllQuestionDetails = () => {
   const [comments, setComments] = useState(data?.comments || []);
 
   const [updateCommentModel, setUpdateCommentModel] = useState(false);
-  const [updateComment, setUpdateComment] = useState("");
+
+  // update comment
+  // Recommendation Title
+  // Recommended product Name
+  // Recommended Product Image
+  // Recommendation reason
+
+  const [updateRecommendationReason, setUpdateRecommendationReason] =
+    useState("");
+  const [updateRecommendationName, setUpdateRecommendationName] = useState("");
+  const [updateRecommendationTitle, setUpdateRecommendationTitel] =
+    useState("");
+  const [updateRecommendationImage, setUpdateRecommendationImage] =
+    useState("");
+
   const [editIndex, setEditIndex] = useState(null);
 
   const isOwner = user?.email === data?.email;
@@ -262,7 +276,9 @@ const AllQuestionDetails = () => {
 
         {/* Recommendation Comments */}
         <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
-          <h3 className="text-lg font-semibold mb-4">Recommendations:  {comments.length}</h3>
+          <h3 className="text-lg font-semibold mb-4">
+            Recommendations: {comments.length}
+          </h3>
 
           {comments.length > 0 ? (
             <div className="space-y-4">
@@ -430,12 +446,39 @@ const AllQuestionDetails = () => {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white dark:bg-gray-800 p-6 rounded-lg w-full max-w-md shadow-lg">
             <h2 className="text-lg font-semibold mb-4 text-gray-800 dark:text-white">
-              Edit Comment
+              Edit Recommended product Name
             </h2>
             <input
               type="text"
-              value={updateComment}
-              onChange={(e) => setUpdateComment(e.target.value)}
+              value={updateRecommendationName}
+              onChange={(e) => setUpdateRecommendationName(e.target.value)}
+              className="w-full p-3 border rounded mb-4 dark:bg-gray-700 dark:text-white"
+            />
+            <h2 className="text-lg font-semibold mb-4 text-gray-800 dark:text-white">
+              Edit Recommended Product Image
+            </h2>
+            <input
+              type="text"
+              value={updateRecommendationImage}
+              onChange={(e) => setUpdateRecommendationImage(e.target.value)}
+              className="w-full p-3 border rounded mb-4 dark:bg-gray-700 dark:text-white"
+            />
+            <h2 className="text-lg font-semibold mb-4 text-gray-800 dark:text-white">
+              Edit Recommendation Reson
+            </h2>
+            <input
+              type="text"
+              value={updateRecommendationReason}
+              onChange={(e) => setUpdateRecommendationReason(e.target.value)}
+              className="w-full p-3 border rounded mb-4 dark:bg-gray-700 dark:text-white"
+            />
+            <h2 className="text-lg font-semibold mb-4 text-gray-800 dark:text-white">
+              Edit Recommendation Titel
+            </h2>
+            <input
+              type="text"
+              value={updateRecommendationTitle}
+              onChange={(e) => setUpdateRecommendationTitel(e.target.value)}
               className="w-full p-3 border rounded mb-4 dark:bg-gray-700 dark:text-white"
             />
             <div className="flex justify-end gap-2">
