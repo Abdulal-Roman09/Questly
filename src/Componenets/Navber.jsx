@@ -88,10 +88,10 @@ const Navber = () => {
                   </Link>
                   <Link
                     to="/profile"
-                    className="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700"
+                    className="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700 flex-wrap"
                     onClick={() => setOpenProfile(false)}
                   >
-                    Email: {user.email}
+                    Email:{user.email}
                   </Link>
                   <button
                     onClick={() => {
