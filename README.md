@@ -1,12 +1,21 @@
-# React + Vite
+## Project Overview
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is a modern React application built with the following key technologies and libraries:
 
-Currently, two official plugins are available:
+- **React 19** for building user interfaces
+- **React Router v7** for client-side routing and navigation
+- **Tailwind CSS 4** with **DaisyUI** and **@tailwindcss/vite** plugin for utility-first and component-based styling
+- **Firebase** for authentication and backend services
+- **Lottie React** for adding engaging animations
+- **React Icons** for scalable vector icons
+- **React Slick** and **Slick Carousel** for responsive sliders/carousels
+- **SweetAlert2** for beautiful alert and confirmation modals
+- **UUID** for unique identifier generation
+- **dotenv** for environment variable management
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+### Installation
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+npm install
