@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useNavigate } from "react-router-dom";
 import Logo from "../assets/Logo2.png";
 import { CgProfile } from "react-icons/cg";
 import { AuthContext } from "../Firebase/AuthProvider";
@@ -8,9 +8,10 @@ const Navber = () => {
   const { user, logout } = useContext(AuthContext);
   const [openMenu, setOpenMenu] = useState(false);
   const [openProfile, setOpenProfile] = useState(false);
+  const navigate = useNavigate();
 
   const toggleMobileMenu = (event) => {
-    event.stopPropagation(); // Prevent the click event from bubbling up to the parent div
+    event.stopPropagation();
     setOpenMenu(!openMenu);
   };
 
@@ -19,7 +20,7 @@ const Navber = () => {
   };
 
   const navItems = [
-    { name: "Home", path: "/" },
+    { name: "Home", path: "/", end: true },
     { name: "AllQueries", path: "/AllQueries" },
     { name: "AddMyQueries", path: "/addQuerie" },
     { name: "My Queries", path: "/myQueries" },
@@ -32,24 +33,20 @@ const Navber = () => {
 
   const getLinkClasses = ({ isActive }) =>
     isActive
-      ? "text-teal-600 dark:text-teal-400 underline font-medium"
+      ? "text-teal-600 dark:text-teal-400 font-medium hover:underline"
       : "text-gray-500 transition hover:text-gray-500/75 dark:text-white dark:hover:text-white/75";
 
   return (
     <header className="bg-white dark:bg-gray-900 shadow-sm">
       <div className="container mx-auto flex items-center justify-between px-4 py-3">
         {/* Logo */}
-        <Link to={"/"}>
-          <div className="flex justify-center items-center">
-            <img className="h-10" src={Logo} alt="Logo" />
-            <h1 className="text-4xl text-teal-500 font-semibold pb-2">
-              Questly
-            </h1>
-          </div>
+        <Link to="/" className="flex justify-center items-center">
+          <img className="h-10" src={Logo} alt="Logo" />
+          <h1 className="text-4xl text-teal-500 font-semibold pb-2">Questly</h1>
         </Link>
 
         {/* Navigation links (Desktop) */}
-        <nav className="hidden lg:block">
+        <nav className="hidden lg:block relative z-10">
           <ul className="flex items-center gap-6 text-sm">
             {navItems
               .filter((item) => {
@@ -66,7 +63,15 @@ const Navber = () => {
               })
               .map((item) => (
                 <li key={item.name}>
-                  <NavLink to={item.path} className={getLinkClasses}>
+                  <NavLink
+                    to={item.path}
+                    end={item.end || false}
+                    className={getLinkClasses}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      navigate(item.path);
+                    }}
+                  >
                     {item.name}
                   </NavLink>
                 </li>
@@ -85,7 +90,6 @@ const Navber = () => {
                 src={user.photoURL}
                 className="w-10 h-10 rounded-full mx-auto"
               />
-
               {openProfile && (
                 <div className="absolute right-0 mt-2 w-fit bg-white dark:bg-gray-800 rounded shadow-md z-50 py-2">
                   <div className="px-4 py-2 text-sm text-gray-700 dark:text-white">
@@ -106,7 +110,7 @@ const Navber = () => {
                     className="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700 flex-wrap"
                     onClick={() => setOpenProfile(false)}
                   >
-                    Email:{user.email}
+                    Email: {user.email}
                   </Link>
                   <button
                     onClick={() => {
@@ -168,11 +172,13 @@ const Navber = () => {
             {navItems
               .filter((item) => {
                 if (!user) {
-                  return item.name === "Home" ||
+                  return (
+                    item.name === "Home" ||
                     item.name === "AllQueries" ||
                     item.name === "Contact Us" ||
                     item.name === "SocialMediaLinks" ||
                     item.name === "HelpSupport"
+                  );
                 }
                 return true;
               })
@@ -180,7 +186,11 @@ const Navber = () => {
                 <li key={item.name}>
                   <NavLink
                     to={item.path}
-                    onClick={() => setOpenMenu(false)}
+                    end={item.end || false}
+                    onClick={() => {
+                      navigate(item.path);
+                      setOpenMenu(false);
+                    }}
                     className={getLinkClasses}
                   >
                     {item.name}
