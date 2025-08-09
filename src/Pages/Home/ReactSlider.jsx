@@ -38,19 +38,22 @@ function ReactSlider() {
   ];
 
   return (
-    <div className="slider-container md:px-20 py-10 md:py-20 bg-white dark:bg-gray-900">
-      <Slider {...settings}>
-        {slides.map((src, index) => (
-          <div key={index} className="px-2">
-            <img
-              src={src}
-              alt={`Slide ${index + 1}`}
-              className="w-full h-64 object-cover rounded-xl shadow-xl"
-            />
-          </div>
-        ))}
-      </Slider>
-    </div>
+ <div className="slider-container bg-white dark:bg-gray-900 py-10 md:py-20">
+  <div className="container mx-auto px-4">
+    <Slider {...settings}>
+      {slides.map((src, index) => (
+        <div key={index} className="px-2">
+          <img
+            src={src}
+            alt={`Slide ${index + 1}`}
+            className="w-full h-64 object-cover rounded-xl shadow-xl"
+          />
+        </div>
+      ))}
+    </Slider>
+  </div>
+</div>
+
   );
 }
 
