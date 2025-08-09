@@ -24,8 +24,9 @@ const Navber = () => {
     { name: "My Queries", path: "/myQueries" },
     { name: "RecommendationsForMe", path: "/recommendationForMe" },
     { name: "MyRecommendations", path: "/myRecommendations" },
-    {name:"Contact Us", path:'/contact'},
-    {name:"SocialMediaLinks", path:'/SocialMediaLinks'}
+    { name: "Contact Us", path: "/contact" },
+    { name: "SocialMediaLinks", path: "/SocialMediaLinks" },
+    { name: "HelpSupport", path: "/HelpSupport" },
   ];
 
   const getLinkClasses = ({ isActive }) =>
@@ -52,8 +53,14 @@ const Navber = () => {
             {navItems
               .filter((item) => {
                 if (!user) {
-                  return item.name === "Home" || item.name === "AllQueries" ||
-                  item.name==="Contact Us"||item.name==="SocialMediaLinks"                }
+                  return (
+                    item.name === "Home" ||
+                    item.name === "AllQueries" ||
+                    item.name === "Contact Us" ||
+                    item.name === "SocialMediaLinks" ||
+                    item.name === "HelpSupport"
+                  );
+                }
                 return true;
               })
               .map((item) => (
