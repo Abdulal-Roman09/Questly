@@ -1,13 +1,17 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 
 const SingleLastPost = ({ question }) => {
+  console.log(question);
   return (
     <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 max-w-xs mx-auto">
       {/* Smaller Image */}
       <img
         className="w-full h-32 object-cover"
-        src={question.imageUrl || "https://via.placeholder.com/400x150?text=No+Image"}
+        src={
+          question.imageUrl ||
+          "https://via.placeholder.com/400x150?text=No+Image"
+        }
         alt={question.title || "Question Image"}
       />
 
@@ -17,8 +21,9 @@ const SingleLastPost = ({ question }) => {
         <h2 className="text-lg font-semibold text-gray-900 dark:text-white line-clamp-2">
           {question.title || "No Title"}
         </h2>
-
-        {/* Show username only */}
+        {/* reason */}
+        <p className="text-sm">{question.reason}</p>
+         {/* Show username only */}
         <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
           {question.username || "Anonymous"}
         </p>

@@ -8,7 +8,7 @@ const HelpSupport = () => {
   return (
     <>
       <Navber />
-      <div className="bg-gray-900  py-12 px-6 text-gray-300">
+      <div className="bg-gray-900 mt-10 py-12 px-6 text-gray-300">
         <div className="max-w-6xl mx-auto">
           {/* Page Title */}
           <h1 className="text-4xl font-bold text-center text-white mb-4">

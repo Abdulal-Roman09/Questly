@@ -60,7 +60,7 @@ const Fotter = () => {
                     </Link>
                   </li>
                   <li>
-                    <Link to={"/lastPost"}>
+                    <Link to={"/HelpSupport"}>
                       <p className="hover:underline">FAQs & Help</p>
                     </Link>
                   </li>
