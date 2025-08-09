@@ -15,6 +15,7 @@ import UpdateMyQuestion from "../assets/AllQueries/UpdateMyQuestion";
 import MyRecommendations from "../MyRecommendations/MyRecommendations";
 import RecommendationsForMe from "../RecommendationsForMe/RecommendationsForMe";
 import ContactUs from "../Pages/ContactUs/ContactUs";
+import SocialMediaLinks from "../Pages/SocialMediaLinks/SocialMediaLinks";
 
 export const router = createBrowserRouter([
   {
@@ -99,5 +100,8 @@ export const router = createBrowserRouter([
   },{
     path:'contact',
     element:<ContactUs />
+  },{
+    path:'SocialMediaLinks',
+    element:<SocialMediaLinks/>
   }
 ]);
