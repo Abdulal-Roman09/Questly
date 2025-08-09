@@ -33,7 +33,7 @@ const Navber = () => {
 
   return (
     <header className="bg-white dark:bg-gray-900 shadow-sm">
-      <div className="flex items-center justify-between px-4 py-3 md:px-20">
+      <div className="container mx-auto flex items-center justify-between px-4 py-3">
         {/* Logo */}
         <Link to={"/"}>
           <div className="flex justify-center items-center">
