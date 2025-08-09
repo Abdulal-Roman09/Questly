@@ -275,7 +275,7 @@ const AllQuestionDetails = () => {
 
               <p className="mt-2 text-gray-700 dark:text-gray-300 text-xl">
                 <span className="">Reason:</span>
-                <span className="text-red-600 text-sm font-medium bg-red-50 px-3 py-1.5 tracking-wide rounded-full ml-4">{data?.reason}</span>
+                <span className="ml-4 text-red-600">{data?.reason}</span>
               </p>
             </div>
           </div>

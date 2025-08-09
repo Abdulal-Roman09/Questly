@@ -9,7 +9,8 @@ const Navber = () => {
   const [openMenu, setOpenMenu] = useState(false);
   const [openProfile, setOpenProfile] = useState(false);
 
-  const toggleMobileMenu = () => {
+  const toggleMobileMenu = (event) => {
+    event.stopPropagation(); // Prevent the click event from bubbling up to the parent div
     setOpenMenu(!openMenu);
   };
 
@@ -48,7 +49,7 @@ const Navber = () => {
         </Link>
 
         {/* Navigation links (Desktop) */}
-        <nav className="hidden md:block">
+        <nav className="hidden lg:block">
           <ul className="flex items-center gap-6 text-sm">
             {navItems
               .filter((item) => {
@@ -136,10 +137,10 @@ const Navber = () => {
             </div>
           )}
 
-          {/* Hamburger button (Mobile) */}
+          {/* Hamburger button (Mobile+midum) */}
           <button
             onClick={toggleMobileMenu}
-            className="block md:hidden rounded-sm bg-gray-100 p-2.5 text-gray-600 transition hover:text-gray-600/75 dark:bg-gray-800 dark:text-white dark:hover:text-white/75"
+            className="block lg:hidden rounded-sm bg-gray-100 p-2.5 text-gray-600 transition hover:text-gray-600/75 dark:bg-gray-800 dark:text-white dark:hover:text-white/75"
           >
             <span className="sr-only">Toggle menu</span>
             <svg
@@ -162,12 +163,16 @@ const Navber = () => {
 
       {/* Mobile Menu */}
       {openMenu && (
-        <nav className="md:hidden px-4 pb-4">
+        <nav className="lg:hidden px-4 pb-4">
           <ul className="flex flex-col gap-3 text-sm">
             {navItems
               .filter((item) => {
                 if (!user) {
-                  return item.name === "Home" || item.name === "AllQueries";
+                  return item.name === "Home" ||
+                    item.name === "AllQueries" ||
+                    item.name === "Contact Us" ||
+                    item.name === "SocialMediaLinks" ||
+                    item.name === "HelpSupport"
                 }
                 return true;
               })
