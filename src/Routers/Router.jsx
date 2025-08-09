@@ -14,6 +14,7 @@ import ErrorPage from "../Pages/Error/ErrorPage";
 import UpdateMyQuestion from "../assets/AllQueries/UpdateMyQuestion";
 import MyRecommendations from "../MyRecommendations/MyRecommendations";
 import RecommendationsForMe from "../RecommendationsForMe/RecommendationsForMe";
+import ContactUs from "../Pages/ContactUs/ContactUs";
 
 export const router = createBrowserRouter([
   {
@@ -95,5 +96,8 @@ export const router = createBrowserRouter([
         <RecommendationsForMe></RecommendationsForMe>
       </PrivateRoutes>
     ),
-  },
+  },{
+    path:'contact',
+    element:<ContactUs />
+  }
 ]);

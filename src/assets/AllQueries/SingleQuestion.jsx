@@ -1,49 +1,36 @@
 import React from "react";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 
 const SingleQuestion = ({ question }) => {
   return (
-    <div className="max-w-md bg-white dark:bg-gray-800 rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
+    <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 max-w-xs mx-auto h-[300px] flex flex-col">
+      {/* Image */}
       <img
-        className="object-cover w-full h-56 sm:h-64"
-        src={question.imageUrl || "https://via.placeholder.com/500x256?text=No+Image"}
+        className="w-full h-32 object-cover flex-shrink-0"
+        src={question.imageUrl || "https://via.placeholder.com/400x150?text=No+Image"}
         alt={question.title || "Question Image"}
       />
 
-      <div className="p-5">
-        <span className="text-xs font-semibold text-teal-600 uppercase dark:text-teal-400">
-         Brand:  {question.brand || "Brand"}
-        </span>
-
-        <h2 className="mt-1 text-xl font-bold text-gray-800 dark:text-white">
-         Title:  {question.title || "No Title"}
+      {/* Content */}
+      <div className="p-3 flex-grow flex flex-col justify-start">
+        {/* Title */}
+        <h2 className="text-lg font-semibold text-gray-900 dark:text-white line-clamp-2 h-[3rem] overflow-hidden">
+          {question.title || "No Title"}
         </h2>
 
-        <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
-          Reason:  {question.reason || "No description available."}
+        {/* Username */}
+        <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
+          {question.username || "Anonymous"}
         </p>
-
-        <div className="mt-5 flex items-center">
-          <img
-            className="h-10 w-10 rounded-full object-cover border border-gray-300 dark:border-gray-600"
-            src={question.photoURL || "https://via.placeholder.com/40"}
-            alt={question.username || "User Avatar"}
-          />
-          <div className="ml-3">
-            <p className="text-sm font-medium text-gray-800 dark:text-gray-200">
-              {question.username || "Anonymous"}
-            </p>
-            <p className="text-xs text-gray-500 dark:text-gray-400">
-              {new Date(question.createdAt).toLocaleDateString()}
-            </p>
-          </div>
-        </div>
       </div>
 
-      <div className="flex justify-end p-4 border-t dark:border-gray-700">
-       <Link to={`/AllQusetinDetails/${question._id}`}> <button className="px-4 py-2 text-sm font-medium text-white bg-teal-600 hover:bg-teal-700 rounded-md transition">
-          View Details
-        </button></Link>
+      {/* Action Button */}
+      <div className="border-t border-gray-200 dark:border-gray-700 p-3 flex-shrink-0">
+        <Link to={`/AllQusetinDetails/${question._id}`}>
+          <button className="w-full text-center px-4 py-1 bg-teal-600 hover:bg-teal-700 rounded-md text-white font-medium transition">
+            View Details
+          </button>
+        </Link>
       </div>
     </div>
   );

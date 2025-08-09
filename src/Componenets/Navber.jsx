@@ -22,8 +22,9 @@ const Navber = () => {
     { name: "AllQueries", path: "/AllQueries" },
     { name: "AddMyQueries", path: "/addQuerie" },
     { name: "My Queries", path: "/myQueries" },
-    { name: "RecommendationsForMe", path: "/recommendationForMe",},
-    { name: "MyRecommendations", path: "/myRecommendations", },
+    { name: "RecommendationsForMe", path: "/recommendationForMe" },
+    { name: "MyRecommendations", path: "/myRecommendations" },
+    {name:"Contact Us", path:'/contact'}
   ];
 
   const getLinkClasses = ({ isActive }) =>
@@ -38,7 +39,9 @@ const Navber = () => {
         <Link to={"/"}>
           <div className="flex justify-center items-center">
             <img className="h-10" src={Logo} alt="Logo" />
-            <h1 className="text-4xl text-teal-500 font-semibold pb-2">Questly</h1>
+            <h1 className="text-4xl text-teal-500 font-semibold pb-2">
+              Questly
+            </h1>
           </div>
         </Link>
 
@@ -48,7 +51,8 @@ const Navber = () => {
             {navItems
               .filter((item) => {
                 if (!user) {
-                  return item.name === "Home" || item.name === "AllQueries";
+                  return item.name === "Home" || item.name === "AllQueries" ||
+                  item.name==="Contact Us";
                 }
                 return true;
               })
@@ -63,7 +67,10 @@ const Navber = () => {
         </nav>
 
         {/* Right-side actions */}
-        <div onClick={toggleProfileMenu} className="flex items-center gap-4 relative">
+        <div
+          onClick={toggleProfileMenu}
+          className="flex items-center gap-4 relative"
+        >
           {user ? (
             <div className="relative">
               <img
@@ -136,7 +143,11 @@ const Navber = () => {
               stroke="currentColor"
               strokeWidth="2"
             >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M4 6h16M4 12h16M4 18h16"
+              />
             </svg>
           </button>
         </div>
