@@ -3,6 +3,7 @@ import { NavLink, Link, useNavigate } from "react-router-dom";
 import Logo from "../assets/Logo2.png";
 import { CgProfile } from "react-icons/cg";
 import { AuthContext } from "../Firebase/AuthProvider";
+import DarkModeToggler from "./DarkModeToggler";
 
 const Navber = () => {
   const { user, logout } = useContext(AuthContext);
@@ -37,7 +38,7 @@ const Navber = () => {
       : "text-gray-500 transition hover:text-gray-500/75 dark:text-white dark:hover:text-white/75";
 
   return (
-   <header className="bg-white dark:bg-gray-900 shadow-sm fixed top-0 left-0 w-full z-50">
+    <header className="bg-white dark:bg-gray-900 shadow-sm fixed top-0 left-0 w-full z-50">
       <div className="container mx-auto flex items-center justify-between  py-3">
         {/* Logo */}
         <Link to="/" className="flex justify-center items-center">
@@ -84,6 +85,9 @@ const Navber = () => {
           onClick={toggleProfileMenu}
           className="flex items-center gap-4 relative"
         >
+          {/* Dark mode toggle button */}
+          <DarkModeToggler />
+
           {user ? (
             <div className="relative">
               <img
