@@ -20,16 +20,16 @@ const LastPosts = () => {
 
   if (loading) {
     return (
-      <div className="text-center py-10 text-xl text-gray-600">
+      <div className="text-center py-10 text-xl text-gray-600 dark:text-gray-300">
         Loading...
       </div>
     );
   }
 
   return (
-    <div className="bg-gray-900 py-10">
+    <div className="bg-white dark:bg-gray-900 transition-colors duration-300 py-10">
       <div className="container mx-auto px-4">
-        <h2 className="text-center bg-gray-900 text-emerald-400 text-3xl md:4xl lg:5xl font-semibold mb-5">
+        <h2 className="text-center text-emerald-600 dark:text-emerald-400 text-3xl md:text-4xl lg:text-5xl font-semibold mb-5">
           Recent Queries:
         </h2>
 
@@ -37,7 +37,7 @@ const LastPosts = () => {
           {data.map((question, index) => (
             <div
               key={index}
-              className="bg-white dark:bg-gray-900 rounded-2xl shadow-lg  transition-transform hover:scale-105 hover:shadow-2xl"
+              className="rounded-2xl shadow-lg bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 transition-transform duration-300 hover:scale-105 hover:shadow-2xl"
             >
               <SingleLastPost question={question} />
             </div>
