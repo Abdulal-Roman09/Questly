@@ -210,7 +210,7 @@ const AllQuestionDetails = () => {
   };
 
   return (
-    <div className="bg-gray-50 dark:bg-gray-900 min-h-screen text-gray-800 dark:text-white transition duration-300">
+    <div className="bg-gray-50 dark:bg-gray-900 min-h-screen text-gray-800 dark:text-white transition duration-300 py-15">
       <Navber />
       <div className="max-w-4xl mx-auto px-4 py-10 space-y-10">
         {/* Product Query Section */}

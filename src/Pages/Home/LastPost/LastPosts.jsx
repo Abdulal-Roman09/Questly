@@ -29,7 +29,7 @@ const LastPosts = () => {
   return (
     <div className="bg-gray-900 py-10">
       <div className="container mx-auto px-4">
-        <h2 className="text-center text-emerald-400 text-3xl md:text-4xl lg:text-5xl font-semibold mb-10">
+        <h2 className="text-center bg-gray-900 text-emerald-400 text-3xl md:4xl lg:5xl font-semibold mb-5">
           Recent Queries:
         </h2>
 

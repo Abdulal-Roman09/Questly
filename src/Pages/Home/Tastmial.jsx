@@ -3,9 +3,9 @@ import React from "react";
 const Tastmial = () => {
   return (
     <div className="bg-gray-900">
-          <div className="container mx-auto p-4  py-10 px-2 md:px-10 lg:px-20">
-      <div className="max-w-2xl mx-auto text-center">
-        <h2 className="text-3xl font-semibold text-teal-900 dark:text-emerald-400 leading-tight">
+          <div className="container mx-auto  py-10 px-2">
+      <div className=" mx-auto text-center">
+        <h2 className="text-3xl font-bold text-teal-900 dark:text-emerald-400 leading-tight">
           What Our Users Are Saying
         </h2>
         <p className="text-[15px] mt-6 leading-relaxed text-teal-700 dark:text-gray-300">

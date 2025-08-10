@@ -38,7 +38,7 @@ const Navber = () => {
 
   return (
    <header className="bg-white dark:bg-gray-900 shadow-sm fixed top-0 left-0 w-full z-50">
-      <div className="container mx-auto flex items-center justify-between px-4 py-3">
+      <div className="container mx-auto flex items-center justify-between  py-3">
         {/* Logo */}
         <Link to="/" className="flex justify-center items-center">
           <img className="h-10" src={Logo} alt="Logo" />
