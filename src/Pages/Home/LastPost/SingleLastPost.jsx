@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const SingleLastPost = ({ question }) => {
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 max-w-xs mx-auto border border-gray-200 dark:border-gray-700">
+    <div className="bg-white dark:bg-gray-800 rounded-xl  overflow-hidden hover:shadow-xl transition-shadow duration-300 max-w-xs mx-auto border border-gray-200 dark:border-gray-700">
       {/* Smaller Image */}
       <img
         className="w-full h-32 object-cover"

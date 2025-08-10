@@ -2,59 +2,40 @@ import { Link } from "react-router-dom";
 
 const RecommendationCard = ({ recommendation }) => {
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
+    <div className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden hover:shadow-xl transition-shadow duration-300 max-w-xs w-full h-[380px] mx-auto border border-gray-200 dark:border-gray-700 flex flex-col">
       {/* Product Image */}
       <img
-        className="object-cover w-full h-56 sm:h-64"
+        className="w-full h-32 object-cover flex-shrink-0"
         src={
-          recommendation.recommendedProductImage
+          recommendation?.recommendedProductImage ||
+          "https://via.placeholder.com/400x150?text=No+Image"
         }
-        alt={recommendation.recommendationTitle || "Recommended Product"}
+        alt={recommendation?.recommendationTitle || "Recommended Product"}
       />
 
       {/* Content */}
-      <div className="p-5">
-        {/* Product Name / Brand */}
+      <div className="p-4 flex-grow overflow-hidden">
         <span className="text-xs font-semibold text-blue-600 uppercase dark:text-blue-400">
-          {recommendation.recommendedProductName || "Unknown Product"}
+          {recommendation?.recommendedProductName || "Unknown Product"}
         </span>
 
-        {/* Recommendation Title */}
-        <h2 className="mt-1 text-xl font-bold text-gray-800 dark:text-white">
-          {recommendation.recommendationTitle || "No Title"}
+        <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 line-clamp-2 mt-1">
+          {recommendation?.recommendationTitle || "No Title"}
         </h2>
 
-        {/* Reason */}
-        <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
-          {recommendation.recommendationReason || "No reason provided."}
+        <p className="text-sm text-gray-700 dark:text-gray-300 mt-1 line-clamp-3">
+          {recommendation?.recommendationReason || "No reason provided."}
         </p>
 
-        {/* Recommender Info */}
-        <div className="mt-5 flex items-center">
-          <img
-            className="h-10 w-10 rounded-full object-cover border border-gray-300 dark:border-gray-600"
-            src={
-              recommendation.
-recommenderImage ||
-              "https://via.placeholder.com/40?text=User"
-            }
-            alt={recommendation.recommenderName || "User Avatar"}
-          />
-          <div className="ml-3">
-            <p className="text-sm font-medium text-gray-800 dark:text-gray-200">
-              {recommendation.recommenderName || "Anonymous"}
-            </p>
-            <p className="text-xs text-gray-500 dark:text-gray-400">
-              {new Date(recommendation.timestamp).toLocaleDateString()}
-            </p>
-          </div>
-        </div>
+        <p className="mt-2 text-sm text-gray-600 dark:text-gray-400 truncate">
+          {recommendation?.recommenderName || "Anonymous"}
+        </p>
       </div>
 
-      {/* Footer Button */}
-      <div className="flex justify-end p-4 border-t dark:border-gray-700">
-        <Link to={`/AllQusetinDetails/${recommendation.queryId}`}>
-          <button className="px-4 py-2 text-sm font-medium text-white bg-teal-600 hover:bg-teal-700 rounded-md transition">
+      {/* Action Button */}
+      <div className="border-t border-gray-200 dark:border-gray-700 p-3 flex-shrink-0">
+        <Link to={`/AllQusetinDetails/${recommendation?.queryId}`}>
+          <button className="w-full text-center px-4 py-2 bg-teal-600 hover:bg-teal-700 dark:bg-teal-500 dark:hover:bg-teal-600 rounded-md text-white font-medium transition">
             View Original Query
           </button>
         </Link>

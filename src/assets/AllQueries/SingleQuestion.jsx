@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const SingleQuestion = ({ question }) => {
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300
+    <div className="bg-white dark:bg-gray-800 rounded-xl  overflow-hidden hover:shadow-xl transition-shadow duration-300
       max-w-xs mx-auto
       flex flex-col
       h-auto 

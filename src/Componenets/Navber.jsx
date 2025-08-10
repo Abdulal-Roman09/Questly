@@ -81,91 +81,93 @@ const Navber = () => {
         </nav>
 
         {/* Right-side actions */}
-        <div
-          onClick={toggleProfileMenu}
-          className="flex items-center gap-4 relative"
-        >
+
+        <div className="flex gap-4">
           {/* Dark mode toggle button */}
           <DarkModeToggler />
-
-          {user ? (
-            <div className="relative">
-              <img
-                src={user.photoURL}
-                className="w-10 h-10 rounded-full mx-auto"
-              />
-              {openProfile && (
-                <div className="absolute right-0 mt-2 w-fit bg-white dark:bg-gray-800 rounded shadow-md z-50 py-2">
-                  <div className="px-4 py-2 text-sm text-gray-700 dark:text-white">
-                    Name: {user.displayName || "Anonymous User"}
-                  </div>
-                  <Link
-                    to="/dashboard"
-                    className="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700"
-                    onClick={() => setOpenProfile(false)}
-                  >
-                    <img
-                      src={user.photoURL}
-                      className="w-14 h-14 rounded-full mx-auto"
-                    />
-                  </Link>
-                  <Link
-                    to="/profile"
-                    className="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700 flex-wrap"
-                    onClick={() => setOpenProfile(false)}
-                  >
-                    Email: {user.email}
-                  </Link>
-                  <button
-                    onClick={() => {
-                      logout();
-                      setOpenProfile(false);
-                    }}
-                    className="inline-block rounded bg-teal-600 px-5 py-3 font-medium text-white shadow-sm transition-colors hover:bg-teal-700 mx-20"
-                  >
-                    Logout
-                  </button>
-                </div>
-              )}
-            </div>
-          ) : (
-            <div className="sm:flex sm:gap-4">
-              <Link
-                to="/login"
-                className="block rounded-md bg-teal-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-teal-700 dark:hover:bg-teal-500"
-              >
-                Login
-              </Link>
-              <Link
-                to="/register"
-                className="hidden sm:block rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium text-teal-600 hover:text-teal-600/75 dark:bg-gray-800 dark:text-white dark:hover:text-white/75"
-              >
-                Register
-              </Link>
-            </div>
-          )}
-
-          {/* Hamburger button (Mobile+midum) */}
-          <button
-            onClick={toggleMobileMenu}
-            className="block lg:hidden rounded-sm bg-gray-100 p-2.5 text-gray-600 transition hover:text-gray-600/75 dark:bg-gray-800 dark:text-white dark:hover:text-white/75"
+          <div
+            onClick={toggleProfileMenu}
+            className="flex items-center gap-4 relative"
           >
-            <span className="sr-only">Toggle menu</span>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="size-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth="2"
+            {user ? (
+              <div className="relative">
+                <img
+                  src={user.photoURL}
+                  className="w-10 h-10 rounded-full mx-auto"
+                />
+                {openProfile && (
+                  <div className="absolute right-0 mt-2 w-fit bg-white dark:bg-gray-800 rounded shadow-md z-50 py-2">
+                    <div className="px-4 py-2 text-sm text-gray-700 dark:text-white">
+                      Name: {user.displayName || "Anonymous User"}
+                    </div>
+                    <Link
+                      to="/dashboard"
+                      className="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700"
+                      onClick={() => setOpenProfile(false)}
+                    >
+                      <img
+                        src={user.photoURL}
+                        className="w-14 h-14 rounded-full mx-auto"
+                      />
+                    </Link>
+                    <Link
+                      to="/profile"
+                      className="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700 flex-wrap"
+                      onClick={() => setOpenProfile(false)}
+                    >
+                      Email: {user.email}
+                    </Link>
+                    <button
+                      onClick={() => {
+                        logout();
+                        setOpenProfile(false);
+                      }}
+                      className="inline-block rounded bg-teal-600 px-5 py-3 font-medium text-white shadow-sm transition-colors hover:bg-teal-700 mx-20"
+                    >
+                      Logout
+                    </button>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="sm:flex sm:gap-4">
+                <Link
+                  to="/login"
+                  className="block rounded-md bg-teal-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-teal-700 dark:hover:bg-teal-500"
+                >
+                  Login
+                </Link>
+                <Link
+                  to="/register"
+                  className="hidden sm:block rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium text-teal-600 hover:text-teal-600/75 dark:bg-gray-800 dark:text-white dark:hover:text-white/75"
+                >
+                  Register
+                </Link>
+              </div>
+            )}
+
+            {/* Hamburger button (Mobile+midum) */}
+            <button
+              onClick={toggleMobileMenu}
+              className="block lg:hidden rounded-sm bg-gray-100 p-2.5 text-gray-600 transition hover:text-gray-600/75 dark:bg-gray-800 dark:text-white dark:hover:text-white/75"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            </svg>
-          </button>
+              <span className="sr-only">Toggle menu</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="size-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+            </button>
+          </div>
         </div>
       </div>
 
