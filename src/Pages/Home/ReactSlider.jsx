@@ -44,7 +44,7 @@ function ReactSlider() {
      
       <div className="container mx-auto px-4 ">
         <Slider {...settings}>
-          {slides.map(({ src, title, description }, index) => (
+          {slides.map(({ src, title  }, index) => (
             <div key={index} className="px-2 relative">
               <img
                 src={src}
