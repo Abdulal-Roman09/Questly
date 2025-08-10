@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 const Banner = () => {
   return (
-    <section className="bg-white lg:grid lg:h-[50vh] lg:place-content-center dark:bg-gray-900">
+    <section className="bg-white lg:grid lg:h-[50vh] lg:place-content-center dark:bg-gray-900 py-10">
       <motion.div
         className="mx-auto w-screen max-w-screen-xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8 lg:py-32"
         initial={{ opacity: 0, y: 80 }}
