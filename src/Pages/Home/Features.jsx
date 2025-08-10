@@ -1,67 +1,76 @@
 import React from "react";
-import { FaCogs, FaLock, FaHeadset, FaTachometerAlt, FaGlobeAmericas, FaComments } from "react-icons/fa";
+import {
+  FaCogs,
+  FaLock,
+  FaHeadset,
+  FaTachometerAlt,
+  FaGlobeAmericas,
+  FaComments,
+} from "react-icons/fa";
 
 const Features = () => {
   return (
-    <div className="bg-gray-900 py-16">
+    <div className="bg-white dark:bg-gray-900 transition-colors duration-300 py-16">
       <div className="container mx-auto px-4">
+        {/* Section Title */}
         <div className="mb-16 text-center max-w-3xl mx-auto">
-          <h2 className="text-center bg-gray-900 text-emerald-400 text-3xl md:4xl lg:5xl font-semibold">
+          <h2 className="text-emerald-600 dark:text-emerald-400 text-3xl md:text-4xl lg:text-5xl font-semibold">
             Discover Our Exclusive Features
           </h2>
-          <p className="text-slate-300 text-sm leading-relaxed">
-            Unlock powerful tools and smart solutions crafted to help you find the best products, read authentic reviews, and make confident choices every time.
+          <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed mt-2">
+            Unlock powerful tools and smart solutions crafted to help you find
+            the best products, read authentic reviews, and make confident choices
+            every time.
           </p>
         </div>
 
+        {/* Features Grid */}
         <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-10">
-          <div className="rounded-xl group p-8 text-center hover:bg-white hover:text-purple-800 dark:hover:bg-gray-800 dark:hover:text-teal-400 text-white transition duration-300 shadow-none hover:shadow-xl">
-            <FaCogs className="mx-auto mb-6 w-12 h-12 text-emerald-400 group-hover:text-purple-800 dark:group-hover:text-teal-400 transition-colors" />
-            <h3 className="text-xl font-semibold mb-3">Customization</h3>
-            <p className="text-slate-300 group-hover:text-slate-600 dark:group-hover:text-teal-400 text-sm leading-relaxed transition-colors">
-              Tailor your product recommendations and alerts based on your preferences and interests.
-            </p>
-          </div>
-
-          <div className="rounded-xl group p-8 text-center hover:bg-white hover:text-purple-800 dark:hover:bg-gray-800 dark:hover:text-teal-400 text-white transition duration-300 shadow-none hover:shadow-xl">
-            <FaLock className="mx-auto mb-6 w-12 h-12 text-emerald-400 group-hover:text-purple-800 dark:group-hover:text-teal-400 transition-colors" />
-            <h3 className="text-xl font-semibold mb-3">Security</h3>
-            <p className="text-slate-300 group-hover:text-slate-600 dark:group-hover:text-teal-400 text-sm leading-relaxed transition-colors">
-              We protect your data with industry-leading security measures so your privacy is always safeguarded.
-            </p>
-          </div>
-
-          <div className="rounded-xl group p-8 text-center hover:bg-white hover:text-purple-800 dark:hover:bg-gray-800 dark:hover:text-teal-400 text-white transition duration-300 shadow-none hover:shadow-xl">
-            <FaHeadset className="mx-auto mb-6 w-12 h-12 text-emerald-400 group-hover:text-purple-800 dark:group-hover:text-teal-400 transition-colors" />
-            <h3 className="text-xl font-semibold mb-3">Support</h3>
-            <p className="text-slate-300 group-hover:text-slate-600 dark:group-hover:text-teal-400 text-sm leading-relaxed transition-colors">
-              Get expert help anytime with 24/7 support dedicated to your satisfaction.
-            </p>
-          </div>
-
-          <div className="rounded-xl group p-8 text-center hover:bg-white hover:text-purple-800 dark:hover:bg-gray-800 dark:hover:text-teal-400 text-white transition duration-300 shadow-none hover:shadow-xl">
-            <FaTachometerAlt className="mx-auto mb-6 w-12 h-12 text-emerald-400 group-hover:text-purple-800 dark:group-hover:text-teal-400 transition-colors" />
-            <h3 className="text-xl font-semibold mb-3">Performance</h3>
-            <p className="text-slate-300 group-hover:text-slate-600 dark:group-hover:text-teal-400 text-sm leading-relaxed transition-colors">
-              Enjoy fast, smooth browsing and quick load times to find the best products without delays.
-            </p>
-          </div>
-
-          <div className="rounded-xl group p-8 text-center hover:bg-white hover:text-purple-800 dark:hover:bg-gray-800 dark:hover:text-teal-400 text-white transition duration-300 shadow-none hover:shadow-xl">
-            <FaGlobeAmericas className="mx-auto mb-6 w-12 h-12 text-emerald-400 group-hover:text-purple-800 dark:group-hover:text-teal-400 transition-colors" />
-            <h3 className="text-xl font-semibold mb-3">Global Reach</h3>
-            <p className="text-slate-300 group-hover:text-slate-600 dark:group-hover:text-teal-400 text-sm leading-relaxed transition-colors">
-              Access product reviews and recommendations from users worldwide.
-            </p>
-          </div>
-
-          <div className="rounded-xl group p-8 text-center hover:bg-white hover:text-purple-800 dark:hover:bg-gray-800 dark:hover:text-teal-400 text-white transition duration-300 shadow-none hover:shadow-xl">
-            <FaComments className="mx-auto mb-6 w-12 h-12 text-emerald-400 group-hover:text-purple-800 dark:group-hover:text-teal-400 transition-colors" />
-            <h3 className="text-xl font-semibold mb-3">Communication</h3>
-            <p className="text-slate-300 group-hover:text-slate-600 dark:group-hover:text-teal-400 text-sm leading-relaxed transition-colors">
-              Connect with reviewers and other users to share honest feedback and advice.
-            </p>
-          </div>
+          {[
+            {
+              icon: <FaCogs />,
+              title: "Customization",
+              desc: "Tailor your product recommendations and alerts based on your preferences and interests.",
+            },
+            {
+              icon: <FaLock />,
+              title: "Security",
+              desc: "We protect your data with industry-leading security measures so your privacy is always safeguarded.",
+            },
+            {
+              icon: <FaHeadset />,
+              title: "Support",
+              desc: "Get expert help anytime with 24/7 support dedicated to your satisfaction.",
+            },
+            {
+              icon: <FaTachometerAlt />,
+              title: "Performance",
+              desc: "Enjoy fast, smooth browsing and quick load times to find the best products without delays.",
+            },
+            {
+              icon: <FaGlobeAmericas />,
+              title: "Global Reach",
+              desc: "Access product reviews and recommendations from users worldwide.",
+            },
+            {
+              icon: <FaComments />,
+              title: "Communication",
+              desc: "Connect with reviewers and other users to share honest feedback and advice.",
+            },
+          ].map((feature, index) => (
+            <div
+              key={index}
+              className="rounded-xl group p-8 text-center bg-gray-50 dark:bg-gray-800 hover:bg-white dark:hover:bg-gray-700 text-gray-900 dark:text-white transition duration-300 shadow-none hover:shadow-xl"
+            >
+              <div className="mx-auto mb-6 w-12 h-12 text-emerald-500 dark:group-hover:text-teal-400 transition-colors">
+                {React.cloneElement(feature.icon, { className: "w-full h-full" })}
+              </div>
+              <h3 className="text-xl font-semibold mb-3">{feature.title}</h3>
+              <p className="text-gray-600 dark:text-gray-300 group-hover:text-gray-700 dark:group-hover:text-teal-400 text-sm leading-relaxed transition-colors">
+                {feature.desc}
+              </p>
+            </div>
+          ))}
         </div>
       </div>
     </div>
